@@ -15,6 +15,8 @@ namespace PracticeAlgorithm
             System.Diagnostics.Debug.WriteLine(output);
         }
 
+        #region | 2D Array - DS | 
+
         [TestMethod]
         public void DS2DArray()
         {
@@ -38,16 +40,57 @@ namespace PracticeAlgorithm
             {
                 for (int col = 0; col < 4; col++)
                 {
-                    int max = arr[row,col] + arr[row,col + 1] + arr[row,col + 2] +
-                            arr[row + 1,col + 1] +
-                            arr[row + 2,col] + arr[row + 2,col + 1] + arr[row + 2,col + 2];
+                    int max = arr[row, col] + arr[row, col + 1] + arr[row, col + 2] +
+                            arr[row + 1, col + 1] +
+                            arr[row + 2, col] + arr[row + 2, col + 1] + arr[row + 2, col + 2];
                     Print(max);
-                    if(maxhourglassSum == null || maxhourglassSum.Value < max)
+                    if (maxhourglassSum == null || maxhourglassSum.Value < max)
                         maxhourglassSum = max;
                 }
             }
 
             return maxhourglassSum.Value;
         }
+
+        #endregion
+
+        #region | Left Rotation | 
+
+        [TestMethod]
+        public void LeftRotatioon()
+        {
+            int n = 1, d = 4;
+            int[] a = new int[] { 1 };
+
+            int[] result = rotLeft(a, d);
+            string.Join(" ", result);
+        }
+        private int[] rotLeft(int[] a, int d)
+        {
+            int[] result = null;
+
+            if (a == null || d < 0)
+                return result;
+
+            int realRotationCnt = d % a.Length;
+            if (realRotationCnt == 0)
+                return a;
+
+            result = new int[a.Length];
+            for(int i = 0; i < a.Length; i++)
+            {
+                int newIdx = i - d;
+                if (newIdx < 0)
+                    newIdx = a.Length + newIdx;
+
+                result[newIdx] = a[i];
+            }
+
+            return result;
+        }
+
+        #endregion
+
+
     }
 }
