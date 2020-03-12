@@ -91,6 +91,63 @@ namespace PracticeAlgorithm
 
         #endregion
 
+        #region | New Year Chaos | 
 
+        [TestMethod]
+        public void MinBribes()
+        {
+            int[] q = new int[] { 2, 1, 5, 3, 4 };
+            minimumBribes(q);
+        }
+        // Complete the minimumBribes function below.
+        private void minimumBribes(int[] q)
+        {
+
+            int minBribes = 0;
+
+            int[] basic = new int[q.Length];
+            for (int i = 0; i <= q.Length - 1; i++)
+                basic[i] = i + 1;
+
+            for (int i = 0; i < q.Length - 1; i++)
+            {
+                if (q[i] == basic[i])
+                    continue;
+                else
+                {
+                    int selIdx = i + 1;
+                    do
+                    {
+                        if (basic[selIdx] == q[i])
+                            break;
+
+                        selIdx++;
+                    } while (selIdx <= basic.Length - 1);
+                    if (selIdx - i > 2)
+                    {
+                        minBribes = -1;
+                        break;
+                    }
+
+                    //re-orignazation
+                    for (int idx = selIdx; idx > i; idx--)
+                    {
+                        int buff = basic[idx];
+                        basic[idx] = basic[idx - 1];
+                        basic[idx - 1] = buff;
+                        minBribes++;
+                    }
+                }
+            }
+            
+            if (minBribes < 0)
+                Print("Too chaotic");
+            else
+            {
+                Print(minBribes);
+            }
+        }
+
+        #endregion
     }
 }
