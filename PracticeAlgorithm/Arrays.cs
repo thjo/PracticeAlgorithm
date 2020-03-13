@@ -10,9 +10,15 @@ namespace PracticeAlgorithm
     [TestClass]
     public class Arrays
     {
-        void Print(object output)
+        void Print(object output, bool newLine = true)
         {
-            System.Diagnostics.Debug.WriteLine(output);
+            if (newLine)
+                System.Diagnostics.Debug.WriteLine(output);
+            else
+            {
+                System.Diagnostics.Debug.Write(output);
+                System.Diagnostics.Debug.Write(" ");
+            }
         }
 
         #region | 2D Array - DS | 
@@ -77,7 +83,7 @@ namespace PracticeAlgorithm
                 return a;
 
             result = new int[a.Length];
-            for(int i = 0; i < a.Length; i++)
+            for (int i = 0; i < a.Length; i++)
             {
                 int newIdx = i - d;
                 if (newIdx < 0)
@@ -139,7 +145,7 @@ namespace PracticeAlgorithm
                     }
                 }
             }
-            
+
             if (minBribes < 0)
                 Print("Too chaotic");
             else
@@ -149,5 +155,175 @@ namespace PracticeAlgorithm
         }
 
         #endregion
+
+
+        #region | Bonetrousle | 
+
+        [TestMethod]
+        public void BonetrousleCase()
+        {
+            bonetrousle(12, 8, 3);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="n"># of spaghetti sticks</param>
+        /// <param name="k"># of boxes of spaghetti sticks in th store.</param>
+        /// <param name="b"># of boxes of spahetti sticks</param>
+        /// <returns></returns>
+        private long[] bonetrousle(long n, long k, int b)
+        {
+            List<long> result = new List<long>();
+            List<long> currSum = new List<long>();
+            long[] arr = new long[k];
+            bool[] flags = new bool[k];
+            for (long i = 1; i <= k; i++) {
+                arr[i - 1] = i;
+                flags[i - 1] = false;
+            }
+
+            combSum(arr, flags, b, k, currSum, n);
+            //for (long lv1 = k-0; lv1 > 1; lv1--)
+            //{
+            //    long selLv1 = lv1;
+            //    for (long lv2 = k - 1; lv2 > 0; lv2--)
+            //    {
+            //        long selLv2 = lv2;
+            //        for (long lv3 = k - 2; lv3 > 0; lv3--)
+            //        {
+            //            long selLv3 = lv3;
+            //            if ((selLv1 + selLv2 + selLv3) == n) {
+            //                result.Add(selLv1);
+            //                result.Add(selLv2);
+            //                result.Add(selLv3);
+            //                break;
+            //            }
+            //        }
+            //    }
+            //}
+
+            if (result.Count == 0)
+                result.Add(-1);
+            return result.ToArray();
+        }
+
+        private void combSum(long[] arr, bool[] flags, int b, long k, List<long> currSum, long n)
+        {
+            if(k <= 0 || b == 0 || currSum.Sum() >= n)
+            {
+                if (currSum.Sum() == n && b == 0)
+                {
+                    foreach (long i in currSum)
+                        Print(i, false);
+                }
+                else
+                    Print("-1");
+                Print(" ");
+                return;
+            }
+
+            flags[k - 1] = true;
+            currSum.Add(arr[k - 1]);
+            combSum(arr, flags, b - 1, k - 1, currSum, n);
+            flags[k - 1] = false;
+            currSum.Remove(arr[k - 1]);
+            combSum(arr, flags, b, k - 1, currSum, n);
+        }
+
+
+
+
+        #endregion
+
+
+        #region | PowerSet | 
+
+        [TestMethod]
+        public void PowerSet()
+        {
+            char[] data = { 'a', 'b', 'c' };
+            int[] flag = new int[data.Length];
+
+            poSet(data, flag, 0);
+        }
+
+        private void poSet(char[] data, int[] flag, int n)
+        {
+            if (n == data.Length)
+            {
+                printPowerSet(data, flag);
+                return;
+            }
+
+            flag[n] = 1;
+            poSet(data, flag, n+1);
+
+            flag[n] = 0;
+            poSet(data, flag, n + 1);
+        }
+
+        private void printPowerSet(char[] data, int[] flag)
+        {
+            for (int i = 0; i < flag.Length; i++)
+            {
+                if (flag[i] == 1)
+                {
+                    Print(data[i], false);
+                }
+            }
+            Print("");
+        }
+
+        #endregion
+
+
+        #region | PowerSet | 
+
+        [TestMethod]
+        public void Combination()
+        {
+            int[] data = { 1 , 2 , 3, 4, 5, 6, 7, 8 };
+            int[] flag = new int[data.Length];
+
+            comb(data, flag, 0, data.Length, 3);
+        }
+
+        private void comb(int[] arr, int[] flag, int depth, int n, int size)
+        {
+            if( size == 0)
+            {
+                printComb(arr, flag, n);
+                return;
+            }
+
+            if (depth == n) {
+                return;
+            }
+            else
+            {
+                flag[depth] = 1;
+                comb(arr, flag, depth + 1, n, size-1);
+
+                flag[depth] = 0;
+                comb(arr, flag, depth + 1, n, size);
+            }
+        }
+
+        private void printComb(int[] data, int[] flag, int n)
+        {
+            for (int i = 0; i < flag.Length; i++)
+            {
+                if (flag[i] == 1)
+                {
+                    Print(data[i], false);
+                }
+            }
+            Print("");
+        }
+
+        #endregion
+
     }
 }
