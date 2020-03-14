@@ -281,5 +281,78 @@ namespace PracticeAlgorithm
 
         #endregion
 
+
+
+        #region | Diagonal Difference |
+
+        [TestMethod]
+        public void DiagonalDiff()
+        {
+
+            List<List<int>> arr = new List<List<int>>();
+            arr.Add(new List<int>());
+            arr[0].Add(-10);
+            arr[0].Add(3);
+            arr[0].Add(0);
+            arr[0].Add(5);
+            arr[0].Add(-4);
+            arr.Add(new List<int>());
+            arr[1].Add(2);
+            arr[1].Add(-1);
+            arr[1].Add(0);
+            arr[1].Add(2);
+            arr[1].Add(-8);
+            arr.Add(new List<int>());
+            arr[2].Add(9);
+            arr[2].Add(-2);
+            arr[2].Add(-5);
+            arr[2].Add(6);
+            arr[2].Add(0);
+            arr.Add(new List<int>());
+            arr[3].Add(9);
+            arr[3].Add(-7);
+            arr[3].Add(4);
+            arr[3].Add(8);
+            arr[3].Add(-2);
+            arr.Add(new List<int>());
+            arr[4].Add(3);
+            arr[4].Add(7);
+            arr[4].Add(8);
+            arr[4].Add(-5);
+            arr[4].Add(0);
+            DiagonalDifference(arr);
+        }
+
+        public void DiagonalDifference(List<List<int>> arr)
+        {
+            if (arr == null || arr.Count < 1)
+                return;
+            try
+            {
+                int lrDiagonal = 0, rlDiagonal = 0;
+                for (int i = 0; i < arr.Count; i++)
+                {
+                    lrDiagonal += arr[i][i];
+                    rlDiagonal += arr[i][arr.Count - 1 - i];
+                    //Print(string.Format("{0} {1}", i, (arr.Count - 1 - i)));
+                    Print(string.Format("{0} {1}", lrDiagonal, rlDiagonal));
+                }
+
+
+                Print("");
+                Print(string.Format("{0} {1}", lrDiagonal, rlDiagonal));
+                Print(Math.Abs(lrDiagonal - rlDiagonal));
+            }
+            catch (Exception ex)
+            {
+                Print(ex);
+            }
+            //-10 3 0 5 - 4
+            //2 - 1 0 2 - 8
+            //9 - 2 - 5 6 0
+            //9 - 7 4 8 - 2
+            //3 7 8 - 5 0
+        }
+        #endregion
     }
 }
