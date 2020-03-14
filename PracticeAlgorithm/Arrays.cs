@@ -175,65 +175,21 @@ namespace PracticeAlgorithm
         /// <returns></returns>
         private long[] bonetrousle(long n, long k, int b)
         {
-            List<long> result = new List<long>();
-            List<long> currSum = new List<long>();
-            long[] arr = new long[k];
-            bool[] flags = new bool[k];
-            for (long i = 1; i <= k; i++) {
-                arr[i - 1] = i;
-                flags[i - 1] = false;
-            }
+            long min, max, lb = b;
+            long quo, mod, i;
+            min = (lb) * (lb + 1) / 2;
+            if (n < min) return new long[] { -1 };
 
-            combSum(arr, flags, b, k, currSum, n);
-            //for (long lv1 = k-0; lv1 > 1; lv1--)
-            //{
-            //    long selLv1 = lv1;
-            //    for (long lv2 = k - 1; lv2 > 0; lv2--)
-            //    {
-            //        long selLv2 = lv2;
-            //        for (long lv3 = k - 2; lv3 > 0; lv3--)
-            //        {
-            //            long selLv3 = lv3;
-            //            if ((selLv1 + selLv2 + selLv3) == n) {
-            //                result.Add(selLv1);
-            //                result.Add(selLv2);
-            //                result.Add(selLv3);
-            //                break;
-            //            }
-            //        }
-            //    }
-            //}
-
-            if (result.Count == 0)
-                result.Add(-1);
-            return result.ToArray();
-        }
-
-        private void combSum(long[] arr, bool[] flags, int b, long k, List<long> currSum, long n)
-        {
-            if(k <= 0 || b == 0 || currSum.Sum() >= n)
+            mod = (n - min) % lb;
+            quo = (n - min) / lb;
+            List<long> v = new List<long>();
+            for (i = b; i >= 1; i--)
             {
-                if (currSum.Sum() == n && b == 0)
-                {
-                    foreach (long i in currSum)
-                        Print(i, false);
-                }
-                else
-                    Print("-1");
-                Print(" ");
-                return;
+                v.Add((i + mod > lb) ? i + quo + 1 : i + quo);
+                if (v[v.Count - 1] > k) return new long[] { -1 };
             }
-
-            flags[k - 1] = true;
-            currSum.Add(arr[k - 1]);
-            combSum(arr, flags, b - 1, k - 1, currSum, n);
-            flags[k - 1] = false;
-            currSum.Remove(arr[k - 1]);
-            combSum(arr, flags, b, k - 1, currSum, n);
+            return v.ToArray();
         }
-
-
-
 
         #endregion
 
@@ -279,7 +235,7 @@ namespace PracticeAlgorithm
         #endregion
 
 
-        #region | PowerSet | 
+        #region | Combination | 
 
         [TestMethod]
         public void Combination()
