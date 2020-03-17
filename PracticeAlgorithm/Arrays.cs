@@ -353,6 +353,45 @@ namespace PracticeAlgorithm
             //9 - 7 4 8 - 2
             //3 7 8 - 5 0
         }
+
+        #endregion
+
+        #region | Two Sum | 
+
+        [TestMethod]
+        public void SumInteger()
+        {
+            //Two Sum
+            //int[] result = twoIntSum(new int[3] { 3, 2, 3 }, 6);
+            //if(result != null)
+            //    Print(string.Format("{0}, {1}", result[0], result[1]));
+
+            //Three Sum
+
+        }
+        private int[] twoIntSum(int[] nums, int target)
+        {
+            Dictionary<int, int> map = new Dictionary<int, int>();
+            for (int i = 0; i < nums.Length; i++)
+            {
+                int complement = target - nums[i];
+                if (map.ContainsKey(complement))
+                {
+                    return new int[] { map[complement], i };
+                }
+                map.Add(nums[i], i);
+            }
+            return null;
+        }
+
+        private IList<IList<int>> ThreeSum(int[] nums)
+        {
+            IList<IList<int>> result = null;
+
+
+            return result;
+        }
+
         #endregion
     }
 }
