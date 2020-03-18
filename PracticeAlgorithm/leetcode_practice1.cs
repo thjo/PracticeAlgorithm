@@ -85,8 +85,7 @@ namespace PracticeAlgorithm
         }
 
         #endregion
-
-
+             
         #region | Reverse Integer | 
 
         [TestMethod]
@@ -121,6 +120,50 @@ namespace PracticeAlgorithm
         }
 
         #endregion
+
+        #region | Palindorme | 
+
+        [TestMethod]
+        public void Palindrome()
+        {
+            IsPalindrome(121);
+        }
+        private bool IsPalindrome(int x)
+        {
+            if (x < 0 || x == 10)
+                return false;
+            else if (x < 10)
+                return true;
+            else
+            {
+                bool isPalindorme = true;
+                string origin = x.ToString();
+                int l = 0, r = origin.Length - 1;
+                while( 1 < r)
+                {
+                    if( origin[l] != origin[r])
+                    {
+                        isPalindorme = false;
+                        break;
+                    }
+                    l++; r--;
+                }
+
+                return isPalindorme;
+                //int reverseNum = 0;
+                //int origin = x;
+                //while (origin > 0)
+                //{
+                //    reverseNum = (reverseNum * 10) + (origin % 10);
+                //    origin = origin / 10;
+                //}
+
+                //return x == reverseNum;
+            }
+        }
+
+        #endregion
+
     }
 
     //Definition for singly-linked list.
