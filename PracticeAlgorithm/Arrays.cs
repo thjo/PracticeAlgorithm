@@ -424,5 +424,43 @@ namespace PracticeAlgorithm
         }
 
         #endregion
+
+
+        #region | Staircase - Star | 
+
+        [TestMethod]
+        public void StaircaseStar()
+        {
+            staircase(6);
+        }
+
+        private void staircase(int n)
+        {
+            int i = 1;
+            while(i <= n)
+            {
+                Print(PrintChar(" ", (n-i)), false);
+                Print(PrintChar("#", i), false);
+                Print("");
+                i++;
+            }
+
+        }
+        private string PrintChar(string s, int n)
+        {
+            StringBuilder sb = new StringBuilder();
+            while (n > 0)
+            {
+                sb.Append(s);
+                n--;
+            }
+            return sb.ToString();
+        }
+        #endregion
+
+
+        #region | Mini-Max Sum | 
+
+        #endregion
     }
 }
