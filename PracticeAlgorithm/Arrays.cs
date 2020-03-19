@@ -356,6 +356,7 @@ namespace PracticeAlgorithm
 
         #endregion
 
+
         #region | Two Sum | 
 
         [TestMethod]
@@ -390,6 +391,36 @@ namespace PracticeAlgorithm
 
 
             return result;
+        }
+
+        #endregion
+
+
+        #region | Plus Minus Fraction | 
+
+        [TestMethod]
+        public void PlusMinusFraction()
+        {
+            plusMinus(new int[] { -4, 3, -9, 0, 4, 1 });
+        }
+
+        private void plusMinus(int[] arr)
+        {
+            decimal n = arr.Length;
+            decimal plus = 0, minus = 0, zero = 0;
+
+            for (int i = 0; i < n; i++)
+            {
+                if (arr[i] == 0)
+                    zero++;
+                else if (arr[i] > 0)
+                    plus++;
+                else
+                    minus++;
+            }
+            Print(string.Format("{0:F6}", plus / n));
+            Print(string.Format("{0:F6}", minus / n));
+            Print(string.Format("{0:F6}", zero / n));
         }
 
         #endregion

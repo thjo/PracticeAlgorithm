@@ -120,7 +120,7 @@ namespace PracticeAlgorithm
         }
 
         #endregion
-
+      
         #region | Palindorme | 
 
         [TestMethod]
@@ -147,6 +147,7 @@ namespace PracticeAlgorithm
                         break;
                     }
                     l++; r--;
+
                 }
 
                 return isPalindorme;
