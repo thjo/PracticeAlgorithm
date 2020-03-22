@@ -165,6 +165,139 @@ namespace PracticeAlgorithm
 
         #endregion
 
+
+
+        #region | Coin Changes | 
+
+        [TestMethod]
+        public void CoinChange()
+        {
+            //int result = TheFewestNumOgCoins(new int[] { 186, 419, 83, 408 }, 6249);
+            //int result = TheFewestNumOgCoins(new int[] { 1, 2, 5 }, 12);
+            //Print(result);
+
+            Print(coinChange2(new int[] { 1, 2, 5 }, 5));
+        }
+
+        public int coinChange(int[] coins, int amount)
+        {
+            if (amount < 1)
+                return 0;
+
+            int[] dp = new int[amount + 1];
+            dp[0] = 0;
+            for (int i = 1; i <= amount; i++)
+                dp[i] = amount + 1;
+
+            Array.Sort(coins);
+            if (coins[coins.Length - 1] == amount)
+                return 1;
+
+            for (int a = 1; a <= amount; a++)
+            {
+                for (int c = 0; c < coins.Length; c++)
+                {
+                    if (a == coins[c] || a % coins[c] == 0)
+                    {
+                        dp[a] = Math.Min(dp[a], a / coins[c]);
+                    }
+                    else if (a > coins[c])
+                    {
+                        dp[a] = Math.Min(dp[a], dp[a - coins[c]] + 1);
+                    }
+                }
+            }
+
+            return dp[amount] > amount ? -1 : dp[amount];
+        }
+        public int coinChange2(int[] coins, int amount)
+        {
+            int comb = 0;
+            if (amount < 1)
+                return 0;
+
+            int[][] dp = new int[coins.Length][];
+            for (int i = 0; i < coins.Length; i++)
+            {
+                dp[i] = new int[amount + 1];
+                dp[i][0] = 1;
+                for (int a = 1; a <= amount; a++)
+                    dp[i][a] = 0;
+            }
+
+            Array.Sort(coins);
+            for (int i = 0; i < coins.Length; i++)
+            {
+                if (coins[i] == 0)
+                    continue;
+
+                for (int a = 1; a <= amount; a++)
+                {
+                    if (coins[i] <= a)
+                    {
+                        if (a % coins[i] == 0)
+                            dp[i][a] = dp[i][a] + 1;
+
+                        if (dp[i][a - coins[i]] > 0)
+                            dp[i][a] += dp[i][a - coins[i]];
+                    }
+                }
+            } //End for - coins
+            for(int c = 0; c < coins.Length; c++)
+                comb += dp[c][amount];
+
+            return comb;
+        }
+        public int coinChangeBase(int[] coins, int amount)
+        {
+            if (amount < 1)
+                return 0;
+            if (coins.Length == 1)
+            {
+                if (coins[0] == 0)
+                    return -1;
+            }
+
+            int[][] dp = new int[2][];
+            dp[0] = new int[amount + 1];
+            dp[1] = new int[amount + 1];
+            dp[0][0] = 1;
+            dp[1][0] = 1;
+            for (int i = 1; i <= amount; i++)
+            {
+                dp[0][i] = 0; dp[1][i] = 0;
+            }
+
+            int curr = 1, before = 0;
+            Array.Sort(coins);
+            for (int i = 0; i < coins.Length; i++)
+            {
+                curr = curr == 0 ? 1 : 0;
+                before = before == 0 ? 1 : 0;
+                if (coins[i] == 0)
+                {
+                    continue;
+                }
+                for (int a = 1; a <= amount; a++)
+                {
+                    if (coins[i] == a || a % coins[i] == 0)
+                    {
+                        dp[curr][a] = dp[before][a] + 1;
+                    }
+                    else if (coins[i] < a)
+                    {
+                        if (dp[before][a - coins[i]] > 0)
+                            dp[curr][a] = dp[before][a - coins[i]] + 1;
+                    }
+                    else
+                        dp[curr][a] = dp[before][a];
+                }
+            } //End for - coins
+
+            return dp[curr][amount] > 0 ? dp[curr][amount] : -1;
+        }
+
+        #endregion
     }
 
     //Definition for singly-linked list.
