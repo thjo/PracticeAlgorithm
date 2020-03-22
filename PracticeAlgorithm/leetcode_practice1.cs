@@ -212,41 +212,32 @@ namespace PracticeAlgorithm
         }
         public int coinChange2(int[] coins, int amount)
         {
-            int comb = 0;
-            if (amount < 1)
+            if (amount == 0 )
+                return 1;
+            else if (amount < 1 || coins == null || coins.Length < 1)
                 return 0;
 
-            int[][] dp = new int[coins.Length][];
-            for (int i = 0; i < coins.Length; i++)
-            {
-                dp[i] = new int[amount + 1];
-                dp[i][0] = 1;
-                for (int a = 1; a <= amount; a++)
-                    dp[i][a] = 0;
-            }
+            int[] dp = new int[amount + 1];
+            dp[0] = 1;
+            for (int i = 1; i <= amount; i++)
+                dp[i] = 0;
 
             Array.Sort(coins);
-            for (int i = 0; i < coins.Length; i++)
-            {
-                if (coins[i] == 0)
-                    continue;
+            if (coins[0] > amount)
+                return 0;
+            else if (coins[0] == amount)
+                return 1;
 
+            for (int c = 0; c < coins.Length; c++)
+            {
                 for (int a = 1; a <= amount; a++)
                 {
-                    if (coins[i] <= a)
-                    {
-                        if (a % coins[i] == 0)
-                            dp[i][a] = dp[i][a] + 1;
-
-                        if (dp[i][a - coins[i]] > 0)
-                            dp[i][a] += dp[i][a - coins[i]];
-                    }
+                    if (a >= coins[c])
+                        dp[a] = dp[a] + dp[a - coins[c]];
                 }
-            } //End for - coins
-            for(int c = 0; c < coins.Length; c++)
-                comb += dp[c][amount];
+            }
 
-            return comb;
+            return dp[amount];
         }
         public int coinChangeBase(int[] coins, int amount)
         {
@@ -295,6 +286,46 @@ namespace PracticeAlgorithm
             } //End for - coins
 
             return dp[curr][amount] > 0 ? dp[curr][amount] : -1;
+        }
+
+        #endregion
+
+
+
+        #region | Longest Substring Without Repeating Characters | 
+
+        [TestMethod]
+        public void LongestSubstring()
+        {
+            Print(LengthOfLongestSubstring("abcabcbb"));
+        }
+
+        private int LengthOfLongestSubstring(string s)
+        {
+            int longestLen = 0;
+            int totalLen = s == null ? 0 : s.Length;
+            if (totalLen <= 1)
+                return totalLen;
+
+            int cursor = 0, startIdx = 0;
+            List<char> fullStr = s.ToList();
+            while (cursor < totalLen)
+            {
+                if (cursor - startIdx > 0)
+                {
+                    int idx = fullStr.IndexOf(s[cursor], startIdx, (cursor - startIdx));
+
+                    if (idx >= 0)
+                    {
+                        longestLen = Math.Max(longestLen, (cursor - startIdx));
+                        startIdx = idx+1;
+                    }
+                }
+                cursor++;
+            }
+            longestLen = Math.Max(longestLen, (cursor - startIdx));
+
+            return longestLen;
         }
 
         #endregion
