@@ -329,6 +329,222 @@ namespace PracticeAlgorithm
         }
 
         #endregion
+
+
+
+        #region | Median of Two Sorted Arrays
+
+        [TestMethod]
+        public void FindMedianSorted()
+        {
+            Print(FindMedianSortedArrays(new int[] {1, 3}, new int[] { 2 }));
+            Print(FindMedianSortedArrays(new int[] { 1, 2 }, new int[] { 3, 4 }));
+        }
+
+        private double FindMedianSortedArrays(int[] nums1, int[] nums2)
+        {
+            double medianVal = 0;
+            List<int> mergedList = new List<int>();
+            if ( (nums1 == null && nums2 == null)
+                || (nums1.Length < 1 && nums2.Length < 1))
+            {
+                return medianVal;
+            }
+
+            int idx1 = 0, idx2 = 0;
+            while(idx1 < nums1.Length && idx2 < nums2.Length)
+            {
+                if(nums1[idx1] > nums2[idx2])
+                {
+                    mergedList.Add(nums2[idx2]);
+                    idx2++;
+                }
+                else if (nums1[idx1] < nums2[idx2])
+                {
+                    mergedList.Add(nums1[idx1]);
+                    idx1++;
+                }
+                else
+                {
+                    mergedList.Add(nums1[idx1]);
+                    mergedList.Add(nums2[idx2]);
+                    idx1++;
+                    idx2++;
+                }
+            }
+
+            while (idx1 < nums1.Length)
+            {
+                mergedList.Add(nums1[idx1]);
+                idx1++;
+            }
+            while (idx2 < nums2.Length)
+            {
+                mergedList.Add(nums2[idx2]);
+                idx2++;
+            }
+
+            if (mergedList.Count > 2)
+            {
+                if (mergedList.Count % 2 == 1)
+                {
+                    Print(string.Format("{0}", mergedList[mergedList.Count / 2]));
+                    medianVal = mergedList[mergedList.Count / 2];
+                }
+                else
+                {
+                    Print(string.Format("{0}, {1}", mergedList[(mergedList.Count / 2)-1], mergedList[(mergedList.Count / 2)]));
+                    medianVal = (mergedList[(mergedList.Count / 2)-1] + mergedList[(mergedList.Count / 2)]) / 2.0;
+                }
+            }
+            else if (mergedList.Count == 2)
+            {
+                Print(string.Format("{0}, {1}", mergedList[0], mergedList[1]));
+                medianVal = (mergedList[0] + mergedList[1]) / 2.0;
+            }
+            else if (mergedList.Count == 1)
+                medianVal = mergedList[0];
+
+            return medianVal;
+        }
+
+        #endregion
+
+
+        #region | Roman to Int | 
+
+        [TestMethod]
+        public void RomanStrToInt()
+        {
+            RomanToInt("MCMXCIV");
+        }
+
+        public int RomanToInt(string s)
+        {
+            /*
+            int total = 0;
+
+            if (s == null || s.Length < 1)
+                return 0;
+            else if (s.Length == 1)
+                return RomanAlabet(s[0]);
+
+            int tmp = 0;
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (tmp == 0)
+                {
+                    tmp = RomanAlabet(s[i]);
+                    continue;
+                }
+                else
+                {
+                    if (s[i - 1] == s[i])
+                        tmp += RomanAlabet(s[i]);
+                    else
+                    {
+                        if(tmp / 10 != RomanAlabet(s[i]) / 10)
+                        {
+                            //자리수 변경
+                            if (tmp < RomanAlabet(s[i]))
+                            {
+                                total += RomanAlabet(s[i]) - tmp;
+                                tmp = 0;
+                            }
+                            else
+                            {
+                                total += tmp;
+                                tmp = RomanAlabet(s[i]);
+                            }
+                        }
+                        else
+                        {
+                            if(tmp < RomanAlabet(s[i]))
+                            {
+                                total += RomanAlabet(s[i]) - tmp;
+                                tmp = 0;
+                            }
+                            else
+                            {
+                                tmp += RomanAlabet(s[i]);
+                            }
+                        }
+                    }
+                }
+            } //End For
+
+            if (tmp > 0)
+                total += tmp;
+
+            return total;
+            */
+
+            if (string.IsNullOrEmpty(s))
+            {
+                return 0;
+            }
+
+            Dictionary<char, int> romanIntegerMap = new Dictionary<char, int>();
+            romanIntegerMap.Add('I', 1);
+            romanIntegerMap.Add('V', 5);
+            romanIntegerMap.Add('X', 10);
+            romanIntegerMap.Add('L', 50);
+            romanIntegerMap.Add('C', 100);
+            romanIntegerMap.Add('D', 500);
+            romanIntegerMap.Add('M', 1000);
+
+            int sum = 0;
+
+            s = s.ToUpper();
+
+            for (int cursor = 0; cursor < s.Length; cursor++)
+            {
+                int currentValue = romanIntegerMap[s[cursor]];
+                sum += currentValue;
+
+                if (cursor + 1 < s.Length)
+                {
+                    if (romanIntegerMap[s[cursor + 1]] > currentValue)
+                        sum -= (2 * currentValue);
+                }
+            }
+
+            return sum;
+
+
+        }
+        private int RomanAlabet(char c)
+        {
+            int val = -1;
+            switch (c)
+            {
+                case 'I':
+                    val = 1;
+                    break;
+                case 'V':
+                    val = 5;
+                    break;
+                case 'X':
+                    val = 10;
+                    break;
+                case 'L':
+                    val = 50;
+                    break;
+                case 'C':
+                    val = 100;
+                    break;
+                case 'D':
+                    val = 500;
+                    break;
+                case 'M':
+                    val = 1000;
+                    break;
+            }
+            return val;
+        }
+
+        #endregion
+
     }
 
     //Definition for singly-linked list.

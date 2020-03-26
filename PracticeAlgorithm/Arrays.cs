@@ -459,6 +459,64 @@ namespace PracticeAlgorithm
         #endregion
 
 
+        #region | Array - Sum of Pair numbers | 
+
+        [TestMethod]
+        public void SumOfPairNums()
+        {
+            //Print(SumOfPairwithSortedArray(new int[] { 1, 2, 3, 9}, 8));
+            //Print(SumOfPairwithSortedArray(new int[] { 1, 2, 4, 4}, 8));
+
+            Print(SumOfPairwithoutSortedArray(new int[] { 1, 2, 3, 9 }, 8));
+            Print(SumOfPairwithoutSortedArray(new int[] { 1, 2, 4, 4 }, 8));
+        }
+
+        public bool SumOfPairwithSortedArray(int[] arr, int sum)
+        {
+            bool isExist = false;
+
+            int min = 0, max = arr.Length - 1;
+            Array.Sort(arr);
+            while (min < max)
+            {
+                int s = arr[min] + arr[max];
+                if (s > sum)
+                    max--;
+                else if (s < sum)
+                    min++;
+                else
+                {
+                    Print(string.Format("{0} - {1}", min, max));
+                    return true;
+                }
+            }
+
+            return isExist;
+        }
+
+
+        public bool SumOfPairwithoutSortedArray(int[] arr, int sum)
+        {
+            bool isExist = false;
+            HashSet<int> dp = new HashSet<int>();
+            for(int i = 0; i < arr.Length; i++)
+            {
+                int comp = sum - arr[i];
+                if(dp.Contains(comp))
+                {
+                    return true;
+                }
+                else
+                {
+                    dp.Add(comp);
+                }
+            }
+            return isExist;
+        }
+
+        #endregion
+
+
         #region | Mini-Max Sum | 
 
         #endregion
