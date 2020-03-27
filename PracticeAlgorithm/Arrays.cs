@@ -519,6 +519,60 @@ namespace PracticeAlgorithm
 
         #region | Mini-Max Sum | 
 
+        [TestMethod]
+        public void MiniMax()
+        {
+            MiniMaxSum(new int[] { 1, 2, 3, 4, 5 });
+        }
+        public void MiniMaxSum(int[] arr)
+        {
+            Array.Sort(arr);
+            Int64 min = 0, max = 0;
+            for(int i = 0; i < arr.Length; i++)
+            {
+                if (i == 0)
+                    min += arr[i];
+                else if (i == arr.Length - 1)
+                    max += arr[i];
+                else
+                {
+                    min += arr[i];
+                    max += arr[i];
+                }
+            }
+            Print(string.Format("{0} {1}", min, max));
+        }
+
+
+
         #endregion
+
+
+        #region | Time Conversion |
+
+        [TestMethod]
+        public void TimeConversion()
+        {
+            Print(TimCoverter("12:40:22AM"));
+        }
+
+        private string TimCoverter(string s)
+        {
+            bool isAM = string.Compare(s.Substring(s.Length - 2, 2), "AM", true) == 0 ? true : false;
+
+            int hour = int.Parse(s.Substring(0, 2));
+            if (isAM && hour == 12)
+                hour = 0;
+            else if (isAM == false)
+            {
+                if(hour != 12)
+                    hour = hour + 12;
+            }
+
+            return string.Format("{0:00}:{1}:{2}", hour, s.Substring(3,2), s.Substring(6, 2));
+        }
+
+        #endregion
+
     }
 }

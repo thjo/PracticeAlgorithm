@@ -23,6 +23,7 @@ namespace PracticeAlgorithm
             }
         }
 
+
         #region | Add Two Numbers | 
 
         [TestMethod]
@@ -85,7 +86,8 @@ namespace PracticeAlgorithm
         }
 
         #endregion
-             
+         
+        
         #region | Reverse Integer | 
 
         [TestMethod]
@@ -121,6 +123,7 @@ namespace PracticeAlgorithm
 
         #endregion
       
+
         #region | Palindorme | 
 
         [TestMethod]
@@ -411,6 +414,7 @@ namespace PracticeAlgorithm
         #endregion
 
 
+
         #region | Roman to Int | 
 
         [TestMethod]
@@ -541,6 +545,119 @@ namespace PracticeAlgorithm
                     break;
             }
             return val;
+        }
+
+        #endregion
+
+
+
+        #region | Longest Prefix | 
+
+        [TestMethod]
+        public void LongestPrefix()
+        {
+            Print(LongestCommonPrefix(new string[] { "flower", "flow", "flight" }));
+        }
+
+        private string LongestCommonPrefix(String[] strs)
+        {
+            if (strs == null || strs.Length == 0) return "";
+            else if (strs.Length == 1) return strs[0];
+
+            return longestCommonPrefix(strs, 0, strs.Length - 1);
+        }
+        private String longestCommonPrefix(String[] strs, int l, int r)
+        {
+            if (l == r)
+                return strs[l];
+            else
+            {
+                int mid = (l + r) / 2;
+                string lcpLeft = longestCommonPrefix(strs, l, mid);
+                string lcpRight = longestCommonPrefix(strs, mid + 1, r);
+                return GetPrefix(lcpLeft, lcpRight);
+            }
+        }
+        private string GetPrefix(String left, String right)
+        {
+            int min = Math.Min(left.Length, right.Length);
+            for (int i = 0; i < min; i++)
+            {
+                if (left[i] != right[i])
+                    return left.Substring(0, i);
+            }
+            return left.Substring(0, min);
+        }
+
+
+        private string LongestCommonPrefix2(string[] strs)
+        {
+            
+            string prefix = string.Empty;
+
+            if( strs != null && strs.Length > 0)
+            {
+                if (strs.Length == 1)
+                    prefix = strs[0];
+                else
+                {
+                    int cursor = 0;
+                    bool isEnd = false;
+                    bool isUnmatched = false;
+                    while (true)
+                    {
+                        char? c = null;
+                        for (int i = 0; i < strs.Length; i++)
+                        {
+                            if (strs[i].Length <= cursor)
+                            {
+                                isEnd = true;
+                                break;
+                            }
+                            else
+                            {
+                                if (c == null)
+                                    c = strs[i][cursor];
+                                else if (c != strs[i][cursor])
+                                {
+                                    isUnmatched = true;
+                                    break;
+                                }
+                            }
+                        }   //End For
+
+                        if (isEnd == true || isUnmatched == true)
+                            break;
+                        else
+                        {
+                            prefix += c.Value;
+                            cursor++;
+                        }
+
+                    }   //End While
+                }
+            }
+
+            return prefix;
+            
+        }
+
+        #endregion
+
+
+        #region | Longest Palindromic Substring | 
+
+        [TestMethod]
+        public void LPalindrome()
+        {
+            Print(LongestPalindrome("babad"));
+        }
+        public string LongestPalindrome(string s)
+        {
+            if (string.IsNullOrWhiteSpace(s) || s.Length == 1)
+                return s;
+
+            return string.Empty;
         }
 
         #endregion
