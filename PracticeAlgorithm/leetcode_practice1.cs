@@ -645,6 +645,63 @@ namespace PracticeAlgorithm
         #endregion
 
 
+        #region | ZigZag Conversion | 
+
+        [TestMethod]
+        public void ZigZagCon()
+        {
+            Print(ZigZagConvert("PAYPALISHIRING", 3));
+        }
+        private string ZigZagConvert(string s, int numRows)
+        {
+            StringBuilder retStr = null;
+
+            if (string.IsNullOrWhiteSpace(s) || numRows <= 1 )
+                return s;
+
+            retStr = new StringBuilder();
+            string[] matrixStr = new string[numRows];
+            for (int r = 0; r < numRows; r++)
+                matrixStr[r] = "";
+
+            int startRow = 0;
+            int currCursor = 0;
+            while(s.Length > currCursor)
+            {
+                if (startRow == numRows)
+                    startRow += -2;
+                else if( startRow > 0)
+                    startRow--;
+
+                if (startRow == 0)
+                {
+                    for (; startRow < numRows; startRow++)
+                    {
+                        if (s.Length > currCursor)
+                        {
+                            matrixStr[startRow] += s[currCursor];
+                            currCursor++;
+                        }
+                        else
+                            break;
+                    }
+                }
+                else
+                {
+                    matrixStr[startRow] += s[currCursor];
+                    currCursor++;
+                }
+            }       //End While
+
+            for (int r = 0; r < numRows; r++)
+                retStr.Append(matrixStr[r]);
+
+            return retStr.ToString();
+        }
+
+
+        #endregion
+
         #region | Longest Palindromic Substring | 
 
         [TestMethod]
@@ -661,6 +718,9 @@ namespace PracticeAlgorithm
         }
 
         #endregion
+
+
+
 
     }
 
