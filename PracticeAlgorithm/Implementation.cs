@@ -80,5 +80,87 @@ namespace PracticeAlgorithm
             return n > 0 ? "YES" : "NO";
         }
         #endregion
+
+
+
+        #region | Between Two Sets | 
+
+        [TestMethod]
+        public void BetweenTwoSets()
+        {
+            List<int> a = new List<int>();
+            List<int> b = new List<int>();
+            a.Add(2); a.Add(3); a.Add(6);
+            b.Add(42); b.Add(84);
+            //a.Add(2); a.Add(4); 
+            //b.Add(16); b.Add(32); b.Add(96);
+            Print(getTotalX(a, b));
+        }
+
+        private int getTotalX(List<int> a, List<int> b)
+        {
+            int aLCM = a[0];
+            int bGCD = b[0];
+            if( a.Count > 1)
+            {
+                for (int i = 1; i < a.Count; i++)
+                {
+                    aLCM = GetLCM(aLCM, a[i]);
+                }
+            }
+
+            if( b.Count > 1)
+            {
+                for (int i = 1; i < b.Count; i++)
+                {
+                    bGCD = GetGCD(bGCD, b[i]);
+                }
+            }
+
+            //
+            int totalX = 0;
+            if (aLCM > bGCD)
+                return 0;
+            else if (aLCM == bGCD)
+                return 1;
+            else
+            {
+                int n = 1;
+                while(aLCM*n <= bGCD)
+                {
+                    if (bGCD % (aLCM * n) == 0)
+                        totalX++;
+                    n++;
+                }
+            }
+            return totalX;
+        }
+        private int GetGCD(int a, int b)
+        {
+            int min = Math.Min(a, b);
+            int max = Math.Max(a, b);
+            int r = -1;
+            while (true)
+            {
+                if ((r = max % min) != 0)
+                {
+                    max = min;
+                    min = r;
+                }
+                else
+                    break;
+            }
+
+            return min;
+        }
+        private int GetLCM(int a, int b)
+        {
+            return a * (b / GetGCD(a,b));
+        }
+
+
+
+        #endregion
+
     }
 }
