@@ -162,5 +162,41 @@ namespace PracticeAlgorithm
 
         #endregion
 
+
+        #region | Breaking the Records | 
+
+        [TestMethod]
+        public void BreakingRecords()
+        {
+            int[] result = BreakRecord(new int[] { 3, 4, 21, 36, 10, 28, 35, 5, 24, 42 });
+            Print(string.Format("{0} {1}", result[0], result[1]));
+        }
+
+        private int[] BreakRecord(int[] scores)
+        {
+            int[] result = new int[2];
+            result[0] = 0;
+            result[1] = 0;
+            if (scores != null && scores.Length > 1)
+            {
+                int lowest = scores[0], highest = scores[0];
+                for (int i = 1; i < scores.Length; i++)
+                {
+                    if (lowest > scores[i])
+                    {
+                        lowest = scores[i];
+                        result[1]++;
+                    }
+                    else if (highest < scores[i])
+                    {
+                        highest = scores[i];
+                        result[0]++;
+                    }
+                }
+            }
+            return result;
+        }
+        #endregion
+
     }
 }
