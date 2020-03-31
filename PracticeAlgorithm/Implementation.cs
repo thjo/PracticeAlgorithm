@@ -198,5 +198,70 @@ namespace PracticeAlgorithm
         }
         #endregion
 
+
+        #region | Birthday Chocolate | 
+
+        [TestMethod]
+        public void BirthdayChocolate()
+        {
+
+            //Print(Birthday(new int[] { 1, 2, 1, 3, 2 }.ToList<int>(), 3, 2));
+            //Print(Birthday(new int[] { 1, 1, 1, 1, 1, 1 }.ToList<int>(), 3, 2));
+            //Print(Birthday(new int[] { 4 }.ToList<int>(), 4, 1));
+
+            Print(Birthday(new int[] { 2, 5, 1, 3, 4, 4, 3, 5, 1, 1, 2, 1, 4, 1, 3, 3, 4, 2, 1 }.ToList<int>(), 18, 7));
+            Print(Birthday(new int[] { 4, 1, 4, 3, 3, 5, 1, 2, 4, 2, 5, 1, 5, 1, 4, 1, 3, 1, 5, 2, 2, 2, 1, 1, 3, 2, 5, 3, 1, 5, 4, 5, 2, 2, 1, 1, 2, 2, 4, 5, 4, 1, 5, 2, 1, 1, 2, 2, 1, 3, 2, 4, 4, 1, 3, 2, 2, 3, 1, 5, 4, 4, 1, 4, 2, 1, 2, 1, 5, 1, 3, 3, 4, 2, 1, 5, 5, 4, 2, 2 ,3, 3, 4, 3, 1, 2, 1, 2, 4, 3 }.ToList<int>(), 16, 7));
+        }
+        private int Birthday(List<int> s, int d, int m)
+        {
+            int cntPossiblity = 0;
+            if (s.Count == 1) {
+                if (d == s[0] && m == 1)
+                    return 1;
+                else
+                    return 0;
+            }
+
+            for(int i = 0; i < s.Count; i++)
+            {
+                int sum = s[i];
+                for (int j = i + 1; j < Math.Min(i + m, s.Count); j++)
+                    sum += s[j];
+
+                if (sum == d)
+                    cntPossiblity++;
+            }
+
+            return cntPossiblity;
+        }
+
+        #endregion
+
+
+        #region | Divisible Sum Pairs |
+
+        [TestMethod]
+        public void DivSumPairs()
+        {
+            Print(DivisibleSumPairs(6, 3, new int[] { 1, 3, 2, 6, 1, 2 }));
+        }
+        private int DivisibleSumPairs(int n, int k, int[] ar)
+        {
+            int cntPossiblity = 0;
+
+            for(int i = 0; i < ar.Length-1; i++)
+            {
+                for(int j = i+1; j < ar.Length; j++)
+                {
+                    if ((ar[i] + ar[j]) % k == 0)
+                        cntPossiblity++;
+                }
+            }
+
+            return cntPossiblity;
+        }
+        #endregion
+
+
     }
 }

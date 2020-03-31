@@ -720,6 +720,108 @@ namespace PracticeAlgorithm
         #endregion
 
 
+        #region | String to Integer (atoi) | 
+        [TestMethod]
+        public void Atoi()
+        {
+            //Print(MyAtoi("42"));
+            //Print(MyAtoi("   -42"));
+            //Print(MyAtoi("4193 with words"));
+            //Print(MyAtoi("words and 987"));
+            //Print(MyAtoi("-91283472332"));
+            Print(MyAtoi("-2147483647"));
+            
+        }
+        private int MyAtoi(string str)
+        {
+            //first discards as many whitespace characters as necessary until the first non-whitespace character is found
+            //starting from this character, takes an optional initial plus or minus sign followed by as many numerical digits as possible
+            //interprets them as a numerical value.
+            //The string can contain additional characters after those that form the integral number, which are ignored and have no effect on the behavior of this function.
+            //If the first sequence of non-whitespace characters in str is not a valid integral number, or if no such sequence exists because either str is empty or it contains only whitespace characters, no conversion is performed.
+
+            int? result = null;
+            bool isCheckedFirstChar = false;
+            int isPositive = 1;
+            bool isOverflow = false;
+            if (string.IsNullOrWhiteSpace(str))
+                return 0;
+            if (IsIgnoredChar(str[0]) == false
+                && IsNumeric(str[0]) == false)
+                return 0;
+
+            for (int i = 0; i < str.Length; i++)
+            {
+                if (result == null && isCheckedFirstChar == false && (str[i] == ' ' || str[i] == '+' || str[i] == '-'))
+                {
+                    if (str[i] == ' ')
+                        continue;
+                    if (isCheckedFirstChar == false)
+                    {
+                        if (str[i] == '-')
+                            isPositive = -1;
+                        isCheckedFirstChar = true;
+                    }
+                    else
+                    {
+                        result = 0;
+                        break;
+                    }
+                }
+                else if (IsNumeric(str[i]))
+                {
+                    if (result == null)
+                        result = 0;
+                    double tmp = (result.Value * 10L + GetNum(str[i]));
+                    if ((tmp * isPositive) <= Int32.MinValue)
+                    {
+                        result = Int32.MinValue;
+                        isOverflow = true;
+                        break;
+                    }
+                    else if ((tmp * isPositive) >= Int32.MaxValue)
+                    {
+                        result = Int32.MaxValue;
+                        isOverflow = true;
+                        break;
+                    }
+                    result = (int)tmp;
+                }
+                else
+                {
+                    if ((isCheckedFirstChar == true || result != null)
+                       || (result == null && isCheckedFirstChar == false))
+                        break;
+                }
+            }
+
+            if (result != null && isOverflow != true)
+                result = result * isPositive;
+
+            return result == null ? 0 : result.Value;
+        }
+        private bool IsIgnoredChar(char c)
+        {
+            bool retVal = true;
+            if (c == ' ' || c == '+' || c == '-')
+            {
+                retVal = true;
+            }
+            else
+                retVal = false;
+
+            return retVal;
+        }
+        private bool IsNumeric(char c)
+        {
+            return (c >= '0' && c <= '9') ? true : false;
+        }
+        private int GetNum(char c)
+        {
+            return c - '0';
+        }
+
+        #endregion
 
 
     }
