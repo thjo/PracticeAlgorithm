@@ -168,8 +168,6 @@ namespace PracticeAlgorithm
 
         #endregion
 
-
-
         #region | Coin Changes | 
 
         [TestMethod]
@@ -293,8 +291,6 @@ namespace PracticeAlgorithm
 
         #endregion
 
-
-
         #region | Longest Substring Without Repeating Characters | 
 
         [TestMethod]
@@ -332,8 +328,6 @@ namespace PracticeAlgorithm
         }
 
         #endregion
-
-
 
         #region | Median of Two Sorted Arrays
 
@@ -412,8 +406,6 @@ namespace PracticeAlgorithm
         }
 
         #endregion
-
-
 
         #region | Roman to Int | 
 
@@ -549,8 +541,6 @@ namespace PracticeAlgorithm
 
         #endregion
 
-
-
         #region | Longest Prefix | 
 
         [TestMethod]
@@ -644,7 +634,6 @@ namespace PracticeAlgorithm
 
         #endregion
 
-
         #region | ZigZag Conversion | 
 
         [TestMethod]
@@ -718,7 +707,6 @@ namespace PracticeAlgorithm
         }
 
         #endregion
-
 
         #region | String to Integer (atoi) | 
         [TestMethod]
@@ -823,7 +811,82 @@ namespace PracticeAlgorithm
 
         #endregion
 
+        #region | Integer to Roman | 
 
+        [TestMethod]
+        public void IntToRoman()
+        {
+            Print(IntToRoman(1994));
+        }
+        public string IntToRoman(int num)
+        {
+            string romanNum = string.Empty;
+            if (num >= 5000 || num <= 0)
+                return romanNum;
+            int decPos = 1;
+            do
+            {
+                int rest = num % 10;
+                romanNum = GetRomanSymbols(rest, decPos) + romanNum;
+                num = num / 10;
+                decPos++;
+            }
+            while (num != 0);
+
+            return romanNum;
+        }
+        private string GetRomanSymbols(int n, int decPos)
+        {
+            string retRoman = string.Empty;
+            if (n == 0)
+                return retRoman;
+
+            if (decPos == 1)
+            {
+                retRoman = GetSymbols("I", "V", "X", n);
+            }
+            else if (decPos == 2)
+            {
+                //10
+                retRoman = GetSymbols("X", "L", "C", n);
+            }
+            else if (decPos == 3)
+            {
+                //100
+                retRoman = GetSymbols("C", "D", "M", n);
+            }
+            else if (decPos == 4)
+            {
+                //1000
+                retRoman = GetSymbols("M", "", "", n);
+            }
+
+            return retRoman;
+        }
+        private string GetSymbols(string one, string five, string ten, int n)
+        {
+            string retRoman = string.Empty;
+            if (n >= 4)
+                retRoman = five;
+
+            if (n % 5 <= 3)
+            {
+                for (int i = 0; i < n % 5; i++)
+                    retRoman += one;
+            }
+            else if (n % 5 == 4)
+            {
+                if (n - 5 > 0)
+                    retRoman = one + ten;
+                else
+                    retRoman = one + retRoman;
+            }
+
+            return retRoman;
+        }
+    
+
+        #endregion
     }
 
     //Definition for singly-linked list.
