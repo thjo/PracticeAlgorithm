@@ -54,7 +54,6 @@ namespace PracticeAlgorithm
         }
         #endregion
 
-
         #region | Kangaroo | 
 
         [TestMethod]
@@ -80,8 +79,6 @@ namespace PracticeAlgorithm
             return n > 0 ? "YES" : "NO";
         }
         #endregion
-
-
 
         #region | Between Two Sets | 
 
@@ -162,7 +159,6 @@ namespace PracticeAlgorithm
 
         #endregion
 
-
         #region | Breaking the Records | 
 
         [TestMethod]
@@ -197,7 +193,6 @@ namespace PracticeAlgorithm
             return result;
         }
         #endregion
-
 
         #region | Birthday Chocolate | 
 
@@ -237,7 +232,6 @@ namespace PracticeAlgorithm
 
         #endregion
 
-
         #region | Divisible Sum Pairs |
 
         [TestMethod]
@@ -261,6 +255,78 @@ namespace PracticeAlgorithm
             return cntPossiblity;
         }
         #endregion
+
+        #region | Migratory Birds | 
+
+        [TestMethod]
+        public void MigBirds()
+        {
+            Print(MigratoryBirds(new int[] { 1, 2, 3, 4, 5, 4, 3, 2, 1, 3, 4 }.ToList<int>()));
+        }
+        private int MigratoryBirds(List<int> arr)
+        {
+            Dictionary<int,int> result = new Dictionary<int, int>();
+            for (int i = 0; i < arr.Count; i++)
+            {
+                if (result.ContainsKey(arr[i]))
+                    result[arr[i]]++;
+                else
+                    result.Add(arr[i], 0);
+            }
+
+            int typeOfBird = 6, birdPop = 0;
+            foreach (var bird in result)
+            {
+                if (birdPop < bird.Value)
+                {
+                    birdPop = bird.Value;
+                    typeOfBird = bird.Key;
+                }
+                else if (birdPop == bird.Value)
+                {
+                    typeOfBird = Math.Min(bird.Key, typeOfBird);
+                }
+            }
+            return typeOfBird;
+        }
+
+        #endregion
+
+        #region | Day of the Programmer | 
+
+        [TestMethod]
+        public void DayOfProg()
+        {
+            //Print(DayOfProgrammer(2016));
+            Print(DayOfProgrammer(1918));       //26.09.1918
+        }
+        private string DayOfProgrammer(int year)
+        {
+            bool isLeapYear = false;
+            if (year > 1917)
+            {
+                if(year % 400 == 0)
+                    isLeapYear = true;
+                else if(year % 4 == 0 && year % 100 != 0)
+                    isLeapYear = true;
+            }
+            else
+            {
+                if (year % 4 == 0)
+                    isLeapYear = true;
+            }
+
+            if (year == 1918)
+                return string.Format("26.09.{0}", year);
+            else if (isLeapYear)
+                return string.Format("12.09.{0}", year);
+            else
+                return string.Format("13.09.{0}", year);
+        }
+  
+
+        #endregion
+
 
 
     }
