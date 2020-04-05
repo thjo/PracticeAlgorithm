@@ -323,11 +323,44 @@ namespace PracticeAlgorithm
             else
                 return string.Format("13.09.{0}", year);
         }
-  
 
         #endregion
 
+        #region | Bon Appétit | 
 
+        [TestMethod]
+        public void BonAppetit()
+        {
+            BonAppetit(new int[] { }.ToList<int>(), 1, 12);
+
+        }
+        private void BonAppetit(List<int> bill, int k, int b)
+        {
+            int actualBillForAnna = (bill.Sum() - bill[k]) / 2;
+
+            if ((b - actualBillForAnna) == 0)
+                Print("Bon Appetit");
+            else
+                Print((b - actualBillForAnna));
+        }
+        #endregion
+
+        #region | Drawing Book | 
+
+        [TestMethod]
+        public void PageCount()
+        {
+            Print(PageCount(6, 2));
+        }
+
+        private int PageCount(int n, int p)
+        {
+            int cntTurn = Math.Min(p/2, n/2-p/2);
+
+            return cntTurn;
+        }
+
+        #endregion
 
     }
 }
