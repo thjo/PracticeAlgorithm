@@ -86,8 +86,7 @@ namespace PracticeAlgorithm
         }
 
         #endregion
-         
-        
+          
         #region | Reverse Integer | 
 
         [TestMethod]
@@ -122,7 +121,6 @@ namespace PracticeAlgorithm
         }
 
         #endregion
-      
 
         #region | Palindorme | 
 
@@ -167,6 +165,7 @@ namespace PracticeAlgorithm
         }
 
         #endregion
+
 
         #region | Coin Changes | 
 
@@ -889,7 +888,107 @@ namespace PracticeAlgorithm
         #endregion
 
 
+        #region | Container With Most Water  |
 
+        [TestMethod]
+        public void MaxArea()
+        {
+            Print(MaxArea(new int[] { 1, 8, 6, 2, 5, 4, 8, 3, 7 }));
+        }
+        private int MaxArea(int[] height)
+        {
+            int maxContainedWater = 0;
+
+            if (height == null || height.Length < 2)
+                return maxContainedWater;
+
+            int startP = 0, endP = height.Length - 1;
+            while(startP < endP)
+            {
+                maxContainedWater = Math.Max(maxContainedWater, Math.Min(height[startP],height[endP]) * (endP - startP));
+                if (height[startP] < height[endP])
+                    startP++;
+                else
+                    endP--;
+            }
+
+            return maxContainedWater;
+
+            //for (int i = 0; i < height.Length; i++)
+            //{
+
+            //}
+        }
+
+        #endregion
+
+        #region | 3Sum | 
+        [TestMethod]
+        public void ThreeSum()
+        {
+            //https://en.wikipedia.org/wiki/3SUM
+            IList<IList<int>> results = ThreeNumsSum(new int[] { -1, 0, 1, 2, -1, -4 });
+            //IList<IList<int>> results = ThreeNumsSum(new int[] { 0, 0, 0 });
+
+            foreach (var list in results)
+            {
+                string s = string.Empty;
+                foreach (var i in list)
+                    s += i.ToString() + ", ";
+                Print(s);
+            }
+        }
+        private IList<IList<int>> ThreeNumsSum(int[] nums)
+        {
+            IList<IList<int>> result = new List<IList<int>>();
+            if (nums == null || nums.Length < 3)
+                return result;
+
+            Array.Sort(nums);
+            int a, b, c;
+            a = nums[0];
+            for (int i = 0; i < nums.Length - 2; i++)
+            {
+                if( i != 0)
+                {
+                    while (i < nums.Length -2 && a == nums[i])
+                        i++;
+
+                    if (i >= (nums.Length-2))
+                        break;
+                }
+
+                a = nums[i];
+                if (a > 0)  // 0, 0, 0
+                    break;
+                int start = i + 1;
+                int end = nums.Length - 1;
+                if (start >= (nums.Length-1) || start >= end)
+                    break;
+
+                while (start < end)
+                {
+                    b = nums[start];
+                    c = nums[end];
+                    if (a + b + c == 0)
+                    {
+                        int[] tmp = new int[] { a, b, c };
+                        result.Add(tmp.ToList<int>());
+                        
+                        while (start + 1 <= end && nums[start] == nums[start + 1]) start++;
+                        start++; end--;
+                    }
+                    else if (a + b + c > 0)
+                        end--;
+                    else
+                        start++;
+                }       //End While
+            }
+
+            return result;
+        }
+
+        #endregion
 
 
 

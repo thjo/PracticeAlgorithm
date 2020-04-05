@@ -156,7 +156,6 @@ namespace PracticeAlgorithm
 
         #endregion
 
-
         #region | Bonetrousle | 
 
         [TestMethod]
@@ -192,7 +191,6 @@ namespace PracticeAlgorithm
         }
 
         #endregion
-
 
         #region | PowerSet | 
 
@@ -233,7 +231,6 @@ namespace PracticeAlgorithm
         }
 
         #endregion
-
 
         #region | Combination | 
 
@@ -280,8 +277,6 @@ namespace PracticeAlgorithm
         }
 
         #endregion
-
-
 
         #region | Diagonal Difference |
 
@@ -356,7 +351,6 @@ namespace PracticeAlgorithm
 
         #endregion
 
-
         #region | Two Sum | 
 
         [TestMethod]
@@ -395,7 +389,6 @@ namespace PracticeAlgorithm
 
         #endregion
 
-
         #region | Plus Minus Fraction | 
 
         [TestMethod]
@@ -424,7 +417,6 @@ namespace PracticeAlgorithm
         }
 
         #endregion
-
 
         #region | Staircase - Star | 
 
@@ -457,7 +449,6 @@ namespace PracticeAlgorithm
             return sb.ToString();
         }
         #endregion
-
 
         #region | Array - Sum of Pair numbers | 
 
@@ -516,7 +507,6 @@ namespace PracticeAlgorithm
 
         #endregion
 
-
         #region | Mini-Max Sum | 
 
         [TestMethod]
@@ -546,7 +536,6 @@ namespace PracticeAlgorithm
 
 
         #endregion
-
 
         #region | Time Conversion |
 
