@@ -362,5 +362,70 @@ namespace PracticeAlgorithm
 
         #endregion
 
+        #region | Grading Students | 
+
+        [TestMethod]
+        public void GradingStudents()
+        {
+            List<int> ret = GradingStudents(new int[] { 73, 67, 38, 33 }.ToList<int>());
+            foreach (var g in ret)
+                Print(g);
+        }
+        private List<int> GradingStudents(List<int> grades)
+        {
+            for(int i = 0; i < grades.Count; i++)
+            {
+                int grade = grades[i];
+                if(grade >= 38 && grade % 5 >= 3)
+                {
+                    grade = grade + (5 - (grade % 5));
+                    grades[i] = grade;
+                }
+            }
+
+            return grades;
+        }
+        #endregion
+
+        #region | Electronics Shop |
+
+        [TestMethod]
+        public void GetMoneySpent()
+        {
+            Print(GetMoneySpent(new int[] { 3, 1 }, new int[] { 5, 2, 8 }, 10));
+        }
+        private int GetMoneySpent(int[] keyboards, int[] drives, int b)
+        {
+            int ret = -1;
+
+            Array.Sort(keyboards);
+            Array.Sort(drives);
+
+            for (int k = keyboards.Length - 1; k >= 0; k--)
+            {
+                for (int d = drives.Length - 1; d >= 0; d--)
+                {
+                    int sum = keyboards[k] + drives[d];
+                    if (sum == b)
+                        return b;
+                    else if (sum > b)
+                        continue;
+                    else
+                    {
+                        ret = Math.Max(ret, sum);
+                        break;
+                    }
+                }
+            }
+
+            return ret;
+        }
+
+        #endregion
+
+
+
+
+
     }
 }
