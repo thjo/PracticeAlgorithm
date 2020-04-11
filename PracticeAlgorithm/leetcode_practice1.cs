@@ -922,6 +922,7 @@ namespace PracticeAlgorithm
         #endregion
 
         #region | 3Sum | 
+
         [TestMethod]
         public void ThreeSum()
         {
@@ -989,8 +990,122 @@ namespace PracticeAlgorithm
 
         #endregion
 
+        #region | 3Sum Closest | 
+
+        [TestMethod]
+        public void ThreeSumClosest()
+        {
+            Print(ThreeSumClosest(new int[] { -1, 2, 1, -4 }, 1));
+            Print(ThreeSumClosest(new int[] { 0, 0, 0 }, 1));
+        }
+        private int ThreeSumClosest(int[] nums, int target)
+        {
+            Array.Sort(nums);
+            int? closest = null;
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                int low = i + 1;
+                int high = nums.Length - 1;
+
+                while(low < high)
+                {
+                    int sum = nums[i] + nums[low] + nums[high];
+                    if (closest == null || Math.Abs(target - sum) < Math.Abs(target - closest.Value))
+                        closest = sum;
+
+                    if (sum == target)
+                        return sum;
+                    else if (sum > target)
+                    {
+                        high--;
+                    }
+                    else
+                        low++;
+                }
+                while (i < nums.Length - 1 && nums[i] == nums[i + 1])
+                    i++;
+            }
+            
+            return closest != null ? closest.Value : int.MaxValue;
+        }
+        #endregion
 
 
+        #region | 4Sum | 
+
+        [TestMethod]
+        public void FourSum()
+        {
+            IList<IList<int>> results = FourSum(new int[] { 1, 0, -1, 0, -2, 2 }, 0);
+            foreach (var list in results)
+            {
+                string s = string.Empty;
+                foreach (var i in list)
+                    s += i.ToString() + ", ";
+                Print(s);
+            }
+        }
+        private IList<IList<int>> FourSum(int[] nums, int target)
+        {
+            Array.Sort(nums);
+            int idxFirst = 0;
+            int len = nums.Length;
+            IList<IList<int>> result = null;
+            result = new List<IList<int>>();
+            while (idxFirst < len - 3)
+            {
+                if ((target - nums[idxFirst]) < 3 * nums[idxFirst + 1])
+                    break;
+
+                while (idxFirst + 3 < len && (target - nums[idxFirst]) > 3 * nums[len - 1])
+                    idxFirst++;
+
+                int idxSec = idxFirst + 1;
+                while(idxSec < len - 2)
+                {
+                    if ((target - nums[idxFirst] - nums[idxSec]) < 2 * nums[idxSec + 1])
+                        break;
+
+                    while (idxSec + 2 < len && (target - nums[idxFirst] - nums[idxSec]) > 2 * nums[len - 1])
+                        idxSec++;
+
+                    int left = idxSec + 1;
+                    int right = len - 1;
+                    int newTarget = target - nums[idxFirst] - nums[idxSec];
+                    while( left < right)
+                    {
+                        if (nums[left] + nums[right] > newTarget)
+                            right--;
+                        else if (nums[left] + nums[right] < newTarget)
+                            left++;
+                        else
+                        {
+                            IList<int> tr = new List<int>();
+                            tr.Add(nums[idxFirst]); tr.Add(nums[idxSec]); tr.Add(nums[left]); tr.Add(nums[right]);
+                            result.Add(tr);
+                            while (left < len && left < right && nums[left] == nums[left + 1])
+                                left++;
+                            while (right >= 0 && left < right && nums[right] == nums[right - 1])
+                                right--;
+                            left++; right--;
+                        }
+                    }
+
+                    while (idxSec < len - 3 && nums[idxSec] == nums[idxSec + 1])
+                        idxSec++;
+                    idxSec++;
+                }   //End while idx second
+
+                while (idxFirst < len - 4 && nums[idxFirst] == nums[idxFirst + 1])
+                    idxFirst++;
+                idxFirst++;
+            }   //End while idx first
+
+            return result;
+        }
+
+        #endregion
     }
 
     //Definition for singly-linked list.
