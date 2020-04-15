@@ -692,16 +692,68 @@ namespace PracticeAlgorithm
         #region | Longest Palindromic Substring | 
 
         [TestMethod]
-        public void LPalindrome()
+        public void LongestPalindrome()
         {
+            Print(LongestPalindrome("abb"));
             Print(LongestPalindrome("babad"));
+            Print(LongestPalindrome("cbbd"));
         }
-        public string LongestPalindrome(string s)
+        private string LongestPalindrome(string s)
         {
-            if (string.IsNullOrWhiteSpace(s) || s.Length == 1)
+            if (s == null || s.Length <= 1)
                 return s;
+            else if (s.Length == 2)
+            {
+                if (s[0] == s[1])
+                    return s;
+                else
+                    return string.Format("{0}", s[0]);
+            }
 
-            return string.Empty;
+            s = AddSeperator(s);
+            int[] radius = new int[s.Length / 2 + 1];
+            int m = s.Length / 2;
+            int endIdx = s.Length - 1;
+            for (int i = 0; i <= m; i++)
+            {
+                if (s[i] == s[endIdx - i])
+                {
+                    if (i == 0)
+                        radius[i] = 1;
+                    else if (i == m)
+                        radius[i] = radius[i - 1];
+                    else
+                        radius[i] = radius[i - 1] + 1;                        
+                }
+            }
+
+            int maxR = 0, maxIdx = 0;
+            for (int i = 0; i < radius.Length; i++)
+            {
+                if (maxR < radius[i])
+                {
+                    maxR = radius[i];
+                    maxIdx = i;
+                }
+                else if (maxR == radius[i])
+                {
+                    maxIdx = Math.Max(maxIdx, i);
+                }
+            }
+
+            string palindromic = s.Substring((maxIdx - maxR), (2*maxR+1));
+            palindromic = palindromic.Replace("#", "");
+
+            return palindromic;
+        }
+        private string AddSeperator(string s)
+        {
+            StringBuilder str = new StringBuilder();
+            for (int i = 0; i < s.Length; i++)
+                str.AppendFormat("#{0}", s[i]);
+            str.Append("#");
+
+            return str.ToString();
         }
 
         #endregion
@@ -1031,7 +1083,6 @@ namespace PracticeAlgorithm
         }
         #endregion
 
-
         #region | 4Sum | 
 
         [TestMethod]
@@ -1106,6 +1157,10 @@ namespace PracticeAlgorithm
         }
 
         #endregion
+
+
+
+
     }
 
     //Definition for singly-linked list.
