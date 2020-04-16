@@ -694,58 +694,43 @@ namespace PracticeAlgorithm
         [TestMethod]
         public void LongestPalindrome()
         {
-            Print(LongestPalindrome("abb"));
-            Print(LongestPalindrome("babad"));
-            Print(LongestPalindrome("cbbd"));
+            //Print(LongestPalindrome("abb"));
+            //Print(LongestPalindrome("babad"));
+            //Print(LongestPalindrome("cbbd"));
         }
-        private string LongestPalindrome(string s)
+        public string LongestPalindrome(string s)
         {
-            if (s == null || s.Length <= 1)
-                return s;
-            else if (s.Length == 2)
-            {
-                if (s[0] == s[1])
-                    return s;
-                else
-                    return string.Format("{0}", s[0]);
-            }
+            if (s == null || s.Length == 0)
+                return "";
 
-            s = AddSeperator(s);
-            int[] radius = new int[s.Length / 2 + 1];
-            int m = s.Length / 2;
-            int endIdx = s.Length - 1;
-            for (int i = 0; i <= m; i++)
+            int len = 0, start = 0;
+            for (int i = 0; i < s.Length; i++)
             {
-                if (s[i] == s[endIdx - i])
+                int oddLen = GetPalidromeLength(s, i, i);
+                int evenLen = GetPalidromeLength(s, i, i + 1);
+                int maxLen = Math.Max(oddLen, evenLen);
+
+                if (maxLen > len )
                 {
-                    if (i == 0)
-                        radius[i] = 1;
-                    else if (i == m)
-                        radius[i] = radius[i - 1];
-                    else
-                        radius[i] = radius[i - 1] + 1;                        
+                    len = maxLen;
+                    start = i - (len - 1) / 2;
                 }
             }
 
-            int maxR = 0, maxIdx = 0;
-            for (int i = 0; i < radius.Length; i++)
-            {
-                if (maxR < radius[i])
-                {
-                    maxR = radius[i];
-                    maxIdx = i;
-                }
-                else if (maxR == radius[i])
-                {
-                    maxIdx = Math.Max(maxIdx, i);
-                }
-            }
-
-            string palindromic = s.Substring((maxIdx - maxR), (2*maxR+1));
-            palindromic = palindromic.Replace("#", "");
-
-            return palindromic;
+            return s.Substring(start, len);
         }
+        private int GetPalidromeLength(string s, int left, int right)
+        {
+            while (left >= 0 && right < s.Length && s[left] == s[right])
+            {
+                left--;
+                right++;
+            }
+
+            return right - left - 1;
+        }
+
+
         private string AddSeperator(string s)
         {
             StringBuilder str = new StringBuilder();
