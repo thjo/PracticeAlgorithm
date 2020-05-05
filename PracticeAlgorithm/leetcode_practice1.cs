@@ -1198,6 +1198,136 @@ namespace PracticeAlgorithm
         #endregion
 
 
+        #region | LetterCombinations |
+
+        [TestMethod]
+        public void LetterCombinations()
+        {
+            LetterCombinations("23");
+        }
+
+        public IList<string> LetterCombinations(string digits)
+        {
+            IList<string> combinations = new List<string>();
+
+            if (string.IsNullOrWhiteSpace(digits))
+                return combinations;
+
+            digits = digits.Replace("1", "");
+            if (string.IsNullOrWhiteSpace(digits))
+                return combinations;
+
+            Dictionary<char, string> letters = new Dictionary<char, string>();
+            letters.Add('2', "abc");
+            letters.Add('3', "def");
+            letters.Add('4', "ghi");
+            letters.Add('5', "jkl");
+            letters.Add('6', "mno");
+            letters.Add('7', "pqrs");
+            letters.Add('8', "tuv");
+            letters.Add('9', "wxyz");
+
+            combinations.Add("");
+            foreach (char c in digits)
+            {
+                //if (letters.ContainsKey(c) == false || string.IsNullOrWhiteSpace(letters[c]))
+                //    continue;
+
+                combinations = CombineLetter(combinations, letters[c]);
+            }
+
+            return combinations;
+        }
+        private IList<string> CombineLetter(IList<string> combinations, string letters)
+        {
+            IList<string> next = new List<string>();
+
+            foreach(string ori in combinations)
+            {
+                foreach(char c in letters)
+                {
+                    next.Add(ori + c);
+                }
+            }
+
+            return next;
+        }
+
+
+        #endregion
+
+        #region | ArrayPractice | 
+
+        [TestMethod]
+        public void ArrayPractice()
+        {
+            Print(FindMaxConsecutiveOnes(new int[] { 1,0,1,1,0,1 }));
+            Print(FindNumbers(new int[] { 555, 901, 482, 1771 }));
+            Print(SortedSquares(new int[] { -4, -1, 0, 3, 10 }));
+        }
+        public int FindMaxConsecutiveOnes(int[] nums)
+        {
+            int len = 0;
+            int maxLen = 0;
+            foreach (int i in nums)
+            {
+                if (i == 1)
+                    len++;
+                else
+                {
+                    maxLen = Math.Max(maxLen, len);
+                    len = 0;
+                }
+            }
+            maxLen = Math.Max(maxLen, len);
+
+            return maxLen;
+        }
+
+        public int FindNumbers(int[] nums)
+        {
+            int cntEvenNum = 0;
+
+            if (nums == null || nums.Length < 1)
+                return cntEvenNum;
+
+            foreach(int num in nums)
+            {
+                if (numOfDigits(num) % 2 == 0)
+                    cntEvenNum++;
+            }
+
+            return cntEvenNum;
+        }
+        private int numOfDigits(int n)
+        {
+            int ret = 1;
+
+            while ((n = n / 10) != 0)
+            {
+                ret++;
+            }
+
+            return ret;
+        }
+
+        public int[] SortedSquares(int[] A)
+        {
+            if (A == null || A.Length == 0)
+                return null;
+
+            int[] retArray = new int[A.Length];
+
+            for(int i = 0; i < A.Length; i++)
+            {
+                retArray[i] = A[i] * A[i];
+            }
+
+            Array.Sort(retArray);
+            return retArray;
+        }
+
+        #endregion
 
     }
 
