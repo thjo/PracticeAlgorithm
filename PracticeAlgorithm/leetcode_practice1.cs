@@ -1329,6 +1329,47 @@ namespace PracticeAlgorithm
 
         #endregion
 
+
+        #region | Remove Nth Node From End of List | 
+
+        [TestMethod]
+        public void RemoveNthFromEnd()
+        {
+            ListNode node = new ListNode(1);
+            node.next = new ListNode(2);
+            node.next.next = new ListNode(3);
+            node.next.next.next = new ListNode(4);
+            node.next.next.next.next = new ListNode(5);
+            RemoveNthFromEnd(node, 2);
+        }
+        public ListNode RemoveNthFromEnd(ListNode head, int n)
+        {
+            if (n == 0 || head == null || head.next == null)
+                return null;
+
+            Dictionary<int, ListNode> buff = new Dictionary<int, ListNode>();
+
+            int i = 0;
+            ListNode first = new ListNode(0);
+            buff.Add(i++, first);
+            first.next = head;
+            while (first.next != null)
+            {
+                buff.Add(i++, first.next);
+                first = first.next;
+            }
+
+            int newNext = buff.Count - n + 1;
+            if (buff.Count - 1  == n )
+                return head.next;
+            else if (newNext == buff.Count)
+                buff[buff.Count - n - 1].next = null;
+            else
+                buff[buff.Count - n - 1].next = buff[newNext];
+
+            return head;
+        }
+        #endregion
     }
 
     //Definition for singly-linked list.
