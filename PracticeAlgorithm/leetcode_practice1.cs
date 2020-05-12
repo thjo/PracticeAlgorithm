@@ -1370,6 +1370,80 @@ namespace PracticeAlgorithm
             return head;
         }
         #endregion
+
+
+        #region | Valid Parentheses | 
+
+        [TestMethod]
+        public void IsValid()
+        {
+            Print(IsValid("()"));
+            Print(IsValid("()[]{}"));
+            Print(IsValid("([)]"));
+        }
+
+        public bool IsValid(string s)
+        {
+            if (string.IsNullOrWhiteSpace(s))
+                return true;
+            else if (s.Length % 2 != 0)
+                return false;
+
+            bool isValid = true;
+
+            //Stack
+            Stack<char> sBuff = new Stack<char>();
+            for(int i = 0; i < s.Length; i++)
+            {
+                int val = convertParentheses(s[i]);
+                if (val == 0)
+                {
+                    isValid = false;
+                    break;
+                }
+                if ( val < 10)
+                    sBuff.Push(s[i]);
+                else
+                {
+                    if (sBuff.Count > 0)
+                    {
+                        if (convertParentheses(sBuff.Pop()) == val % 10)
+                            continue;
+                    }
+
+                    isValid = false;
+                    break;
+                }
+            }
+            if (isValid == true)
+                isValid = (sBuff.Count == 0);
+            
+
+            return isValid;
+        }
+        int convertParentheses(char c)
+        {
+            if (c == '(')
+                return 1;
+            else if (c == '[')
+                return 2;
+            else if (c == '{')
+                return 3;
+            else if (c == ')')
+                return 11;
+            else if (c == ']')
+                return 12;
+            else if (c == '}')
+                return 13;
+            else
+                return 0;
+        }
+
+
+        #endregion
+
+
+
     }
 
     //Definition for singly-linked list.
