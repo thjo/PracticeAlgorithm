@@ -1566,31 +1566,37 @@ namespace PracticeAlgorithm
         [TestMethod]
         public void StrStr()
         {
-            Print(StrStr("hello", "ll"));
+            Print(StrStr("mississippi", "mississippi"));
         }
 
         public int StrStr(string haystack, string needle)
         {
             int startIdx = -1;
 
-            if (string.IsNullOrWhiteSpace(haystack) || string.IsNullOrWhiteSpace(needle))
+            if (string.IsNullOrWhiteSpace(haystack) && string.IsNullOrWhiteSpace(needle))
                 return 0;
+            else if (string.IsNullOrWhiteSpace(needle))
+                return 0;
+            else if (string.IsNullOrWhiteSpace(haystack))
+                return startIdx;
 
-            int n = 0;
             for(int i = 0; i < haystack.Length; i++)
             {
-                if (haystack[i] == needle[n])
+                int n = 0;
+                if ( (haystack.Length - i) < needle.Length )
+                    break;
+                for (int j = i; j < haystack.Length; j++)
                 {
-                    if (n == (needle.Length - 1))
+                    if (haystack[j] == needle[n])
                     {
-                        startIdx = i - n;
-                        break;
-                    }
+                        if (n == (needle.Length - 1))
+                            return j - n;
 
-                    n++;
+                        n++;
+                    }
+                    else
+                        break;
                 }
-                else
-                    n = 0;
             }
             return startIdx;
         }
