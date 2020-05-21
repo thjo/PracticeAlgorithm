@@ -1444,6 +1444,160 @@ namespace PracticeAlgorithm
 
 
 
+
+        #region | Merge Two Lists | 
+
+        [TestMethod]
+        public void MergeTwoLists()
+        {
+            ListNode l1 = new ListNode(1);
+            l1.next = new ListNode(2);
+            l1.next.next = new ListNode(4);
+            ListNode l2 = new ListNode(1);
+            l2.next = new ListNode(3);
+            l2.next.next = new ListNode(4);
+            MergeTwoLists(l1, l2);
+        }
+
+        public ListNode MergeTwoLists(ListNode l1, ListNode l2)
+        {
+            ListNode root = new ListNode(0);
+            ListNode next = root;
+
+            while (l1 != null && l2 != null)
+            {
+                if( (l1.val > l2.val))
+                {
+                    next.next = l2;
+                    l2 = l2.next;
+                }
+                else
+                {
+                    next.next = l1;
+                    l1 = l1.next;
+                }
+                next = next.next;
+            }
+
+            if (l1 != null)
+                next.next = l1;
+            else if (l2 != null)
+                next.next = l2;
+
+            return root != null ? root.next : null;
+        }
+
+        #endregion
+
+
+        #region | Generate Parenthesis | 
+
+        [TestMethod]
+        public void GenerateParenthesis()
+        {
+            GenerateParenthesis(7);
+        }
+
+        public IList<string> GenerateParenthesis(int n)
+        {
+
+            //TODO
+            return null;
+        }
+
+        #endregion
+
+
+        #region | Remove Duplicates from Sorted Array |
+
+        [TestMethod]
+        public void RemoveDuplicates()
+        {
+            Print(RemoveDuplicates(new int[] { }));
+        }
+
+        public int RemoveDuplicates(int[] nums)
+        {
+            if (nums == null || nums.Length < 1)
+                return 0;
+
+            int len = 1;
+            for(int i = 1; i < nums.Length; i++)
+            {
+                if (nums[i - 1] != nums[i])
+                {
+                    nums[len] = nums[i];
+                    len++;
+                }
+            }
+
+            return len;
+        }
+
+        #endregion
+
+        #region | Remove Element |
+
+        [TestMethod]
+        public void RemoveElement()
+        {
+            Print(RemoveElement(new int[] { 3, 2, 2, 3 }, 3));
+        }
+
+        public int RemoveElement(int[] nums, int val)
+        {
+            int i = 0;
+            if (nums == null || nums.Length < 1)
+                return i;
+
+            for(int j = 0; j < nums.Length; j++)
+            {
+                if (nums[j] != val)
+                    nums[i++] = nums[j];
+            }
+
+            return i;
+        }
+
+        #endregion
+
+        #region | Implement strStr() |
+
+        [TestMethod]
+        public void StrStr()
+        {
+            Print(StrStr("hello", "ll"));
+        }
+
+        public int StrStr(string haystack, string needle)
+        {
+            int startIdx = -1;
+
+            if (string.IsNullOrWhiteSpace(haystack) || string.IsNullOrWhiteSpace(needle))
+                return 0;
+
+            int n = 0;
+            for(int i = 0; i < haystack.Length; i++)
+            {
+                if (haystack[i] == needle[n])
+                {
+                    if (n == (needle.Length - 1))
+                    {
+                        startIdx = i - n;
+                        break;
+                    }
+
+                    n++;
+                }
+                else
+                    n = 0;
+            }
+            return startIdx;
+        }
+
+        #endregion
+
+
     }
 
     //Definition for singly-linked list.
