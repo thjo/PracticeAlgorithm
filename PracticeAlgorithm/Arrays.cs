@@ -563,5 +563,73 @@ namespace PracticeAlgorithm
 
         #endregion
 
+
+        #region | DuplicateZeros | 
+
+        [TestMethod]
+        public void DuplicateZeros()
+        {
+            DuplicateZeros(new int[] { 1, 5, 2, 0, 6, 8, 0, 6, 0 });
+        }
+        public void DuplicateZeros(int[] arr)
+        {
+            for(int i = 0; i < arr.Length; i++)
+            {
+                if (arr[i] == 0 && i < (arr.Length - 1))
+                {
+                    for (int j = arr.Length-1; j >= i+1; j--)
+                        arr[j] = arr[j-1];
+                    arr[++i] = 0;
+                }
+            }
+        }
+
+        #endregion
+
+        #region | Merge | 
+
+        [TestMethod]
+        public void Merge()
+        {
+            Merge(new int[] { 1, 2, 3, 0, 0, 0 }, 3, new int[] { 2, 5, 6 }, 3);
+        }
+
+        public void Merge(int[] nums1, int m, int[] nums2, int n)
+        {
+            int[] newArr = new int[m+n];
+
+            int n1 = 0, n2 = 0;
+            int i = 0;
+            while(m > 0 && n > 0)
+            {
+                if (nums1[n1] > nums2[n2])
+                {
+                    newArr[i] = nums2[n2++];
+                    n--;
+                }
+                else
+                {
+                    newArr[i] = nums1[n1++];
+                    m--;
+                }
+                i++;
+            }
+
+            while (m > 0)
+            {
+                newArr[i++] = nums1[n1++];
+                m--;
+            }
+            while (n > 0)
+            {
+                newArr[i++] = nums2[n2++];
+                n--;
+            }
+
+            for (int j = 0; j < newArr.Length; j++)
+                nums1[j] = newArr[j];
+        }
+
+        #endregion
     }
 }
