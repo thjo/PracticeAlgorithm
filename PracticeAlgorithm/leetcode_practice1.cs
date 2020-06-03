@@ -1604,6 +1604,35 @@ namespace PracticeAlgorithm
         #endregion
 
 
+        #region | Search Insert Position | 
+
+        [TestMethod]
+        public void SearchInsert()
+        {
+            Print(SearchInsert(new int[] {1,3,5,6 }, 5));
+        }
+        public int SearchInsert(int[] nums, int target)
+        {
+            int idxInserted = 0;
+
+            if (nums == null || nums.Length < 1)
+                return idxInserted;
+
+            idxInserted = nums.Length;
+            for (int i = 0; i < idxInserted; i++)
+            {
+                if (nums[i] >= target)
+                {
+                    idxInserted = i;
+                    break;
+                }
+            }
+
+            return idxInserted;
+        }
+        #endregion
+
+
     }
 
     //Definition for singly-linked list.
