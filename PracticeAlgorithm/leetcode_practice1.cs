@@ -1632,6 +1632,49 @@ namespace PracticeAlgorithm
         }
         #endregion
 
+        #region | Count And Say | 
+
+        [TestMethod]
+        public void CountAndSay()
+        {
+            Print(CountAndSay(4));
+        }
+        public string CountAndSay(int n)
+        {
+            string startSTr = "1";
+            if (n == 1)
+                return startSTr;
+
+            for (int i = 0; i < n-1; i++)
+            {
+                startSTr = SayStr(startSTr);
+            }
+
+            return startSTr;
+        }
+        public string SayStr(string countStr)
+        {
+            StringBuilder sbRet = new StringBuilder();
+
+            char previousNum = countStr[0];
+            int count = 1;
+            for (int i = 1; i < countStr.Length; i++)
+            {
+                if(previousNum != countStr[i])
+                {
+                    sbRet.AppendFormat("{0}{1}", count, previousNum);
+                    previousNum = countStr[i];
+                    count = 1;
+                }
+                else
+                    count++;
+            }
+            if (count > 0)
+                sbRet.AppendFormat("{0}{1}", count, previousNum);
+
+            return sbRet.ToString();
+        }
+        #endregion
 
     }
 
