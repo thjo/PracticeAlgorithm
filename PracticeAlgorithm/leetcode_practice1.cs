@@ -1679,6 +1679,7 @@ namespace PracticeAlgorithm
 
         #region | Maximum Subarray - Kadane's aglorithm(Dynamic Programming) |
         //https://medium.com/@rsinghal757/kadanes-algorithm-dynamic-programming-how-and-why-does-it-work-3fd8849ed73d#:~:text=Kadane's%20algorithm%20is%20able%20to,runtime%20of%20O(n).
+        //local_max[i] = MAX(A[i], A[i] + local_max[i-1])
         [TestMethod]
         public void MaxSubArray()
         {
@@ -1689,14 +1690,14 @@ namespace PracticeAlgorithm
             if (nums == null || nums.Length < 1)
                 return 0;
 
-            int sum = nums[0], max = nums[0];
+            int currMax = nums[0], globalMax = nums[0];
             for (int i = 1; i < nums.Length; i++)
             {
-                sum = Math.Max(nums[i], sum + nums[i]);
-                max = Math.Max(sum, max);
+                currMax = Math.Max(nums[i], currMax + nums[i]);
+                globalMax = Math.Max(currMax, globalMax);
             }
 
-            return max;
+            return globalMax;
         }
 
         #endregion
