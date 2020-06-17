@@ -1676,6 +1676,30 @@ namespace PracticeAlgorithm
         }
         #endregion
 
+
+        #region | Maximum Subarray - Kadane's aglorithm(Dynamic Programming) |
+        //https://medium.com/@rsinghal757/kadanes-algorithm-dynamic-programming-how-and-why-does-it-work-3fd8849ed73d#:~:text=Kadane's%20algorithm%20is%20able%20to,runtime%20of%20O(n).
+        [TestMethod]
+        public void MaxSubArray()
+        {
+            Print(MaxSubArray(new int[] { -2, 1, -3, 4, -1, 2, 1, -5, 4 }));
+        }
+        private int MaxSubArray(int[] nums)
+        {
+            if (nums == null || nums.Length < 1)
+                return 0;
+
+            int sum = nums[0], max = nums[0];
+            for (int i = 1; i < nums.Length; i++)
+            {
+                sum = Math.Max(nums[i], sum + nums[i]);
+                max = Math.Max(sum, max);
+            }
+
+            return max;
+        }
+
+        #endregion
     }
 
     //Definition for singly-linked list.
