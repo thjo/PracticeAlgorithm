@@ -22,7 +22,13 @@ namespace PracticeAlgorithm
                 System.Diagnostics.Debug.Write(" ");
             }
         }
-
+        void Print(int[] output, bool newLine = true)
+        {
+            foreach(int o in output)
+            {
+                Print(o, newLine);
+            }
+        }
 
         #region | Add Two Numbers | 
 
@@ -1701,6 +1707,119 @@ namespace PracticeAlgorithm
         }
 
         #endregion
+
+
+        #region | Length of Last Word | 
+
+        [TestMethod]
+        public void LengthOfLastWord()
+        {
+            Print(LengthOfLastWord("Hello World"));
+        }
+        public int LengthOfLastWord(string s)
+        {
+            int numOfWord = 0;
+
+            if (string.IsNullOrWhiteSpace(s))
+                return numOfWord;
+
+            s = s.TrimEnd();
+            for(int i = s.Length-1; i >= 0; i--)
+            {
+                if (s[i] == ' ' && numOfWord == 0)
+                    continue;
+                else if (s[i] == ' ' && numOfWord != 0)
+                    break;
+                else
+                    numOfWord++;
+            }
+
+            return numOfWord;
+        }
+        #endregion
+
+        #region | Plus One | 
+
+        [TestMethod]
+        public void PlusOne()
+        {
+            Print(PlusOne(new int[] { 9 }));
+        }
+        public int[] PlusOne(int[] digits)
+        {
+            if (digits == null || digits.Length < 1)
+                return null;
+
+            if (digits[digits.Length - 1] + 1 >= 10)
+            {
+                bool isNeededResize = true;
+                digits[digits.Length - 1] = 0;
+
+                for (int i = digits.Length - 2; i >= 0; i--)
+                {
+                    if (digits[i] + 1 >= 10)
+                    {
+                        digits[i] = 0;
+                        continue;
+                    }
+                    else
+                    {
+                        digits[i] += 1;
+                        isNeededResize = false;
+                        break;
+                    }
+                }
+
+                if (isNeededResize)
+                {
+                    List<int> result = new List<int>();
+                    result.Add(1);
+                    result.AddRange(digits);
+
+                    return result.ToArray();
+                }
+                else
+                    return digits;
+            }
+            else
+            {
+                digits[digits.Length - 1] += 1;
+                return digits;
+            }
+        }
+        #endregion
+
+        #region | Add Binary | 
+
+        [TestMethod]
+        public void AddBinary()
+        {
+            Print(AddBinary("11", "1"));
+        }
+        public string AddBinary(string a, string b)
+        {
+            StringBuilder sum = new StringBuilder();
+
+            int aIdx = a.Length - 1;
+            int bIdx = b.Length - 1;
+            int maxLen = Math.Max(a.Length - 1, b.Length - 1);
+            int tmp = 0;
+            for (int i = maxLen; i >= 0; i--)
+            {
+                tmp += (aIdx >= 0) ? a[aIdx--] - '0' : 0;
+                tmp += (bIdx >= 0) ? b[bIdx--] - '0' : 0;
+                sum.Insert(0, (char)(tmp % 2 + '0'));
+                tmp = tmp / 2;
+            }
+            if (tmp == 1)
+                sum.Insert(0, 1);
+
+            return sum.ToString();
+        }
+
+        #endregion
+
+
     }
 
     //Definition for singly-linked list.
