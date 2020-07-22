@@ -1495,6 +1495,79 @@ namespace PracticeAlgorithm
 
         #endregion
 
+        #region | Merge k Sorted Lists | 
+
+        [TestMethod]
+        public void MergeKLists()
+        {
+            ListNode l1 = new ListNode(-1);
+            l1.next = new ListNode(5);
+            
+            ListNode l2 = new ListNode(1);
+            l2.next = new ListNode(4);
+            l2.next.next = new ListNode(6);
+            ListNode l3 = new ListNode(4);
+            l3.next = new ListNode(5);
+            l3.next = new ListNode(6);
+            ListNode[] lists = new ListNode[] { l1, l2, l3 };
+            MergeKLists(lists);
+        }
+        public ListNode MergeKLists1(ListNode[] lists)
+        {
+            ListNode dummy = new ListNode(int.MinValue);
+            ListNode currNode = dummy;
+
+            for (int i = 0; i < lists.Length; i++)
+                currNode = MergeTwoLists(currNode, lists[i]);
+
+            return dummy.next;
+        }
+        public ListNode MergeKLists(ListNode[] lists)
+        {
+            /*
+                approach: merge two lists at a time
+
+                use two pointers to select the lists
+                eg: [0,1,2,3,4,5] -> positions
+
+                start merging 0,5 into 0
+                then merging 1,4 into 1
+                then merging 2,3 into 2
+                when left is higher then or equal to right (3,2) 
+                    it means we are in the middle of the list 
+                    restart left from 0 and keep merging
+                merging 0,2 into 0
+                    when left is higher then or equal to right (1,1)
+                    restart left from 0 and keep merging
+                merging 0,1 into 0
+                    when right is = 0
+                        it means all lists were merged
+                return lists[0]
+            */
+
+            if (lists.Length < 1)
+                return null;
+            else if (lists.Length == 1)
+                return lists[0];
+
+            int leftIdx = 0, rightIdx = lists.Length-1;
+            while (rightIdx != 0)
+            {
+                if(leftIdx !=0 && rightIdx != leftIdx)
+                    rightIdx = leftIdx-1;
+                leftIdx = 0;
+                while (leftIdx < rightIdx)
+                {
+                    lists[leftIdx] = MergeTwoLists(lists[leftIdx], lists[rightIdx]);
+                    leftIdx++;
+                    rightIdx--;
+                }
+            }
+            
+
+            return lists[0];
+        }
+        #endregion
 
         #region | Generate Parenthesis | 
 
@@ -1827,5 +1900,10 @@ namespace PracticeAlgorithm
         public int val;
         public ListNode next;
         public ListNode(int x) { val = x; }
-     }
+        public ListNode(int val = 0, ListNode next = null)
+        {
+            this.val = val;
+            this.next = next;
+        }
+    }
 }
