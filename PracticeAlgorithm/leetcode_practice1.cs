@@ -1893,6 +1893,74 @@ namespace PracticeAlgorithm
         #endregion
 
 
+        #region | Check If Exist |
+        
+        [TestMethod]
+        public void CheckIfExist()
+        {
+            Print(CheckIfExist(new int[] { 10, 2, 5, 3 }));
+        }
+
+        public bool CheckIfExist(int[] arr)
+        {
+            if (arr != null && arr.Length > 1)
+            {
+                for (int i = 0; i < arr.Length; i++)
+                {
+                    int n = arr[i];
+                    for (int j = i + 1; j < arr.Length; j++) {
+                        if (n == (2 * arr[j]) || (2 * n) == arr[j])
+                            return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        #endregion
+
+        #region | Valid Mountain Arary | 
+
+        [TestMethod]
+        public void ValidMountainArray()
+        {
+            Print(ValidMountainArray(new int[] { 0,3,2,1 }));
+        }
+
+        public bool ValidMountainArray(int[] A)
+        {
+            int flag = 1;
+            if (A != null && A.Length > 2)
+            {
+                if (A[0] >= A[1])
+                    return false;
+
+                for (int i = 2; i < A.Length; i++)
+                {
+                    if(A[i - 1] == A[i])   
+                        return false;
+                    else if( A[i -1] > A[i])
+                    {
+                        if (flag == 1)
+                            flag = -1;
+                    }
+                    else
+                    {
+                        if ( flag == -1)
+                            return false;
+                    }
+                }
+
+            }
+
+            if (flag == -1)
+                return true;
+            else
+                return false;
+        }
+
+        #endregion
     }
 
     //Definition for singly-linked list.
