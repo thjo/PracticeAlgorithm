@@ -1961,6 +1961,56 @@ namespace PracticeAlgorithm
         }
 
         #endregion
+
+
+
+        #region | Binary Search | 
+
+        [TestMethod]
+        public void BinarySearch()
+        {
+            Print(SearchB(new int[] { -1,0,3,5,9,12 }, 2));
+        }
+        public int SearchB(int[] nums, int target)
+        {
+            int idx = -1;
+            if (nums != null && nums.Length > 0)
+            {
+                //idx = BinarySearch(nums, 0, nums.Length - 1, target);
+                int l = 0, r = nums.Length - 1;
+                while (l <= r)
+                {
+                    int m = (l + r) / 2;
+
+                    // Check if x is present at mid 
+                    if (nums[m] == target)
+                        return m;
+                    else if (nums[m] < target)
+                        l = m + 1;
+                    else
+                        r = m - 1;
+                }
+            }
+
+            return idx;
+        }
+
+        public int BinarySearch(int[] nums, int left, int right, int target)
+        {
+            if (left <= right)
+            {
+                int mid = (left + right) / 2;
+                if (nums[mid] == target)
+                    return mid;
+                else if (target > nums[mid])
+                    return BinarySearch(nums, mid + 1, right, target);
+                else
+                    return BinarySearch(nums, left, mid-1, target);
+            }
+            else
+                return -1;
+        }
+        #endregion
     }
 
     //Definition for singly-linked list.

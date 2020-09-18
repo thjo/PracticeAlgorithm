@@ -631,5 +631,223 @@ namespace PracticeAlgorithm
         }
 
         #endregion
+
+        #region | In Place | 
+
+        [TestMethod]
+        public void ReplaceElements()
+        {
+            int[] a = ReplaceElements(new int[] { 17, 18, 5, 4, 6, 1});
+            foreach (int i in a)
+                Print(i, true);
+        }
+        public int[] ReplaceElements(int[] arr)
+        {
+            if(arr != null && arr.Length > 0)
+            {
+                int max = arr[arr.Length - 1];
+                arr[arr.Length - 1] = -1;
+                int tmp = 0;
+                for(int i = arr.Length-2; i >= 0; i--)
+                {
+                    tmp = arr[i];
+                    arr[i] = max;
+                    if (max < tmp)
+                        max = tmp;
+                }
+            }
+
+            return arr;
+        }
+
+        [TestMethod]
+        public void RemoveDuplicates()
+        {
+            Print(RemoveDuplicates(new int[] {1, 1, 2 }));
+        }
+        public int RemoveDuplicates(int[] nums)
+        {
+            if (nums == null || nums.Length == 0)
+                return 0;
+            else
+            {
+                int len = 1;
+                int previousNum = nums[0];
+                for (int i = 1; i < nums.Length; i++)
+                {
+                    if (previousNum != nums[i])
+                    {
+                        nums[len++] = nums[i];
+                    }
+
+                    previousNum = nums[i];
+                }
+
+                return len;
+            }
+        }
+
+        [TestMethod]
+        public void MoveZeroes()
+        {
+            MoveZeroes(new int[] { });
+        }
+        public void MoveZeroes(int[] nums)
+        {
+            if(nums != null && nums.Length > 1)
+            {
+                int currentIdx = 0;
+                for(int i = 0; i < nums.Length; i++)
+                {
+                    if(nums[i] != 0)
+                    {
+                        nums[currentIdx++] = nums[i];
+                    }
+                }
+
+                while(currentIdx < nums.Length)
+                    nums[currentIdx++] = 0;
+
+            }
+        }
+
+        [TestMethod]
+        public void SortArrayByParity()
+        {
+            int[] a = SortArrayByParity(new int[] { 17, 18, 5, 4, 6, 1 });
+            foreach (int i in a)
+                Print(i, true);
+        }
+        public int[] SortArrayByParity(int[] A)
+        {
+            if (A != null && A.Length > 1)
+            {
+                int evenIdx = 0;
+
+                for (int i = 0; i < A.Length; i++)
+                {
+                    if (A[i] % 2 == 0)
+                    {
+                        if (evenIdx == i)
+                            evenIdx++;
+                        else
+                        {
+                            int tmp = A[evenIdx];
+                            A[evenIdx++] = A[i];
+                            A[i] = tmp;
+                        }
+                    }
+                }
+            }
+
+            return A;
+        }
+
+        [TestMethod]
+        public void SortedSquares()
+        {
+            int[] a = SortedSquares(new int[] { 17, 18, 5, 4, 6, 1 });
+            foreach (int i in a)
+                Print(i, true);
+        }
+        public int[] SortedSquares(int[] A)
+        {
+            if( A != null && A.Length > 0)
+            {
+                for (int i = 0; i < A.Length; i++)
+                    A[i] = A[i] * A[i];
+
+                Array.Sort(A);
+            }
+
+            return A;
+        }
+
+        [TestMethod]
+        public void HeightChecker()
+        {
+            Print(HeightChecker(new int[] { 1, 1, 4, 2, 1, 3 }));
+        }
+        public int HeightChecker(int[] heights)
+        {
+            int cnt = 0;
+
+            if (heights != null && heights.Length > 1)
+            {
+                int[] sortedHeights = new int[heights.Length];
+                Array.Copy(heights, sortedHeights, heights.Length);
+                Array.Sort(sortedHeights);
+
+                for (int i = 0; i < heights.Length; i++)
+                    if (heights[i] != sortedHeights[i])
+                        cnt++;
+            }
+
+            return cnt;
+        }
+
+        [TestMethod]
+        public void ThirdMax()
+        {
+            Print(ThirdMax(new int[] { 3, 2, 1 }));
+        }
+        public int ThirdMax(int[] nums)
+        {
+            int? max = null;
+            int? secondMax = null;
+            int? thirdMax = null;
+            
+            foreach(int num in nums)
+            {
+                if (num == max || num == secondMax || num == thirdMax)
+                    continue;
+                else if (max == null || max.Value < num)
+                {
+                    thirdMax = secondMax;
+                    secondMax = max;
+                    max = num;
+                }
+                else if (secondMax == null || secondMax.Value < num)
+                {
+                    thirdMax = secondMax;
+                    secondMax = num;
+                }
+                else if (thirdMax == null || thirdMax.Value < num)
+                {
+                    thirdMax = num;
+                }
+            }
+            if (thirdMax == null)
+                thirdMax = max;
+
+            return thirdMax.Value;
+        }
+
+        [TestMethod]
+        public void FindDisappearedNumbers()
+        {
+            FindDisappearedNumbers(new int[] { 4, 3, 2, 7, 8, 2, 3, 1 });
+        }
+        public IList<int> FindDisappearedNumbers(int[] nums)
+        {
+            IList<int> output = new List<int>();
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                int tmpIdx = Math.Abs(nums[i]);
+                if (nums[tmpIdx - 1] > 0)
+                    nums[tmpIdx - 1] *= -1;
+            }
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (nums[i] > 0)
+                    output.Add(i + 1);
+            }
+            return output;
+        }
+        #endregion
+
+
     }
 }
