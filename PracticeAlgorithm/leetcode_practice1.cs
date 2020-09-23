@@ -1980,7 +1980,7 @@ namespace PracticeAlgorithm
                 int l = 0, r = nums.Length - 1;
                 while (l <= r)
                 {
-                    int m = (l + r) / 2;
+                    int m = l + (r - l) / 2;
 
                     // Check if x is present at mid 
                     if (nums[m] == target)
@@ -1995,21 +1995,160 @@ namespace PracticeAlgorithm
             return idx;
         }
 
-        public int BinarySearch(int[] nums, int left, int right, int target)
+        [TestMethod]
+        public void MySqrt()
+        {
+            Print(MySqrt(8));
+        }
+        public int MySqrt(int x)
+        {
+            //return (int)Math.Sqrt(x);
+            int l = 0, r = x;
+            double dd = Math.Pow(r, 2);
+            while (l <= r)
+            {
+                double mid = l + (r - l) / 2;
+                if ((mid * mid) == x)
+                    return (int)mid;
+
+                if (x > (mid * mid))
+                    l = (int)mid + 1;
+                else
+                    r = (int)mid - 1;
+            }
+            return r;
+        }
+
+        [TestMethod]
+        public void Search()
+        {
+            Print(Search(new int[] { 4, 5, 6, 7, 0, 1, 2 }, 3));
+        }
+        public int Search(int[] nums, int target)
+        {
+            for(int i = 0; i < nums.Length; i++)
+            {
+                if (nums[i] == target)
+                    return i;
+            }
+
+            return -1;
+        }
+
+        [TestMethod]
+        public void FindPeakElement()
+        {
+            Print(FindPeakElement(new int[] { 1, 2, 1, 3, 5, 6, 4 }));
+        }
+        public int FindPeakElement(int[] nums)
+        {
+            if (nums == null || nums.Length == 0)
+                return -1;
+            else if (nums.Length == 1)
+                return 0;
+
+            int left = 0, right = nums.Length -1;
+            while( left < right)
+            {
+                int mid = left + (right - left) / 2;
+                if (nums[mid] > nums[mid + 1])
+                    right = mid;
+                else
+                    left = mid + 1;
+            }
+
+            return left;
+        }
+
+        [TestMethod]
+        public void FindMin()
+        {
+            Print(FindMin(new int[] { 4, 5, 6, 7, 0, 1, 2}));
+        }
+        public int FindMin(int[] nums)
+        {
+            // If the list has just one element then return that element.
+            if (nums.Length == 1)
+                return nums[0];
+
+            int left = 0, right = nums.Length - 1;
+            if (nums[right] > nums[0])
+                return nums[0];
+            while (left < right)
+            {
+                int mid = left + (right - left) / 2;
+                if (nums[mid] > nums[mid + 1])
+                    return nums[mid + 1];
+
+                if (nums[mid - 1] > nums[mid])
+                    return nums[mid];
+
+                if (nums[mid] > nums[0])
+                    left = mid + 1;
+                else
+                    right = mid - 1;
+            }
+
+            return -1;
+        }
+
+
+        private int BinarySearch1(int[] nums, int target)
+        {
+            if (nums == null || nums.Length == 0)
+                return -1;
+
+            int left = 0, right = nums.Length - 1;
+            while (left <= right)
+            {
+                // Prevent (left + right) overflow
+                int mid = left + (right - left) / 2;
+                if (nums[mid] == target) { return mid; }
+                else if (nums[mid] < target) { left = mid + 1; }
+                else { right = mid - 1; }
+            }
+
+            // End Condition: left > right
+            return -1;
+        }
+        private int BinarySearch2(int[] nums, int target)
+        {
+            if (nums == null || nums.Length == 0)
+                return -1;
+
+            int left = 0, right = nums.Length;
+            while (left < right)
+            {
+                // Prevent (left + right) overflow
+                int mid = left + (right - left) / 2;
+                if (nums[mid] == target) { return mid; }
+                else if (nums[mid] < target) { left = mid + 1; }
+                else { right = mid; }
+            }
+
+            // Post-processing:
+            // End Condition: left == right
+            if (left != nums.Length && nums[left] == target) return left;
+            return -1;
+        }
+        private int BinarySearch(int[] nums, int left, int right, int target)
         {
             if (left <= right)
             {
-                int mid = (left + right) / 2;
+                int mid = left + (right - left) / 2;
                 if (nums[mid] == target)
                     return mid;
                 else if (target > nums[mid])
                     return BinarySearch(nums, mid + 1, right, target);
                 else
-                    return BinarySearch(nums, left, mid-1, target);
+                    return BinarySearch(nums, left, mid - 1, target);
             }
             else
                 return -1;
         }
+
+
+
         #endregion
     }
 
