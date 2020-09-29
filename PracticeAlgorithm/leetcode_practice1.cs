@@ -2022,14 +2022,34 @@ namespace PracticeAlgorithm
         [TestMethod]
         public void Search()
         {
-            Print(Search(new int[] { 4, 5, 6, 7, 0, 1, 2 }, 3));
+            Print(Search(new int[] {5,1,3}, 5));
         }
         public int Search(int[] nums, int target)
         {
-            for(int i = 0; i < nums.Length; i++)
+            int start = 0;
+            int end = nums.Length - 1;
+            while (start <= end)
             {
-                if (nums[i] == target)
-                    return i;
+                int mid = start + (end-start) / 2;
+                if (nums[mid] == target)
+                    return mid;
+
+                if (nums[start] <= nums[mid])
+                {
+                    //left side is asc
+                    if (target >= nums[start] && target < nums[mid])
+                        end = mid - 1;
+                    else
+                        start = mid + 1;
+                }
+                else
+                {
+                    //right side is asc
+                    if (target > nums[mid] && target < nums[start])
+                        start = mid + 1;
+                    else
+                        end = mid - 1;
+                }
             }
 
             return -1;
@@ -2092,7 +2112,146 @@ namespace PracticeAlgorithm
             return -1;
         }
 
+        [TestMethod]
+        public void SearchRange()
+        {
+            SearchRange(new int[] { 1, 4  }, 4);
+        }
+        public int[] SearchRange(int[] nums, int target)
+        {
+            if (nums.Length == 0)
+                return new int[] { -1, -1 };
+            else if (nums.Length == 1 && nums[0] == target)
+                return new int[] { 0, 0 };
 
+            int left = -1, right = -1;
+            int start = 0, end = nums.Length - 1;
+
+            while(start <= end)
+            {
+                int mid = start + (end - start) / 2;
+                if (nums[mid] == target)
+                {
+                    left = searchLinear(nums, target, true, mid - 1);
+                    if (left == -1)
+                        left = mid;
+                    right = searchLinear(nums, target, false, mid + 1);
+                    if (right == -1)
+                        right = mid;
+
+                    return new int[] { left, right };
+                }
+                else if (nums[mid] < target)
+                {
+                    start = mid + 1;
+                }
+                else
+                    end = mid - 1;
+            }
+
+            return new int[] { left, right};
+        }
+        private int searchLinear(int[] nums, int target, bool isBackward, int startIdx)
+        {
+            int retVal = -1;
+            if(isBackward)
+            {
+                for(int i = startIdx; i >= 0; i--)
+                {
+                    if (nums[i] != target)
+                        return retVal;
+                    else
+                        retVal = i;
+                }
+            }
+            else
+            {
+                for (int i = startIdx; i < nums.Length; i++)
+                {
+                    if (nums[i] != target)
+                        return retVal;
+                    else
+                        retVal = i;
+                }
+            }
+
+            return retVal;
+        }
+
+        public double MyPow(double x, int n)
+        {
+            if (n < 0)
+            {
+                x = 1 / x;
+                n *= -1;
+            }
+
+            return MyPowSub(x,n);
+        }
+        private double MyPowSub(double x, int n)
+        {
+            if (x == 0)
+                return 0;
+            if (n == 0)
+                return 1;
+            if (n == 1)
+                return x;
+
+            double ans = MyPowSub(x * x, n / 2);
+            if (n % 2 == 1)
+                ans = ans * x;
+            return ans;
+        }
+
+        [TestMethod]
+        public void IsPerfectSquare()
+        {
+            Print(IsPerfectSquare(16));
+        }
+        public bool IsPerfectSquare(int num)
+        {
+            if (num == 1)
+                return true;
+
+            int low = 1, max = num / 2;
+            while (low <= max)
+            {
+                int mid = low + (max - low) / 2;
+                if (num % mid == 0 && (num / mid) == mid)
+                    return true;
+                else if ((num / mid) < mid)
+                    max = mid - 1;
+                else
+                    low = mid + 1;
+            }
+
+            return false;
+        }
+
+
+        [TestMethod]
+        public void NextGreatestLetter()
+        {
+            Print(NextGreatestLetter(new char[] { 'c', 'f', 'j' }, 'c'));
+        }
+        public char NextGreatestLetter(char[] letters, char target)
+        {
+            int start = 0, end = letters.Length - 1;
+
+            while (start < end)
+            {
+                int mid = start + (end - start) / 2;
+                if (letters[mid] - target <= 0)
+                    start = mid + 1;
+                else
+                    end = mid;
+            }
+
+            if(letters[start] < target)
+                return letters[0];
+            else
+                return letters[start];
+        }
         private int BinarySearch1(int[] nums, int target)
         {
             if (nums == null || nums.Length == 0)
