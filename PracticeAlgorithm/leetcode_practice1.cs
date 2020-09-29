@@ -2237,21 +2237,27 @@ namespace PracticeAlgorithm
         public char NextGreatestLetter(char[] letters, char target)
         {
             int start = 0, end = letters.Length - 1;
-
-            while (start < end)
+            while (start <= end)
             {
                 int mid = start + (end - start) / 2;
-                if (letters[mid] - target <= 0)
+                if (letters[mid] <= target) {
                     start = mid + 1;
+                }
                 else
-                    end = mid;
+                {
+                    end = mid - 1;
+                }
             }
 
-            if(letters[start] < target)
+            if (start == letters.Length)
                 return letters[0];
             else
+            {
                 return letters[start];
+            }
         }
+
+
         private int BinarySearch1(int[] nums, int target)
         {
             if (nums == null || nums.Length == 0)
@@ -2306,7 +2312,22 @@ namespace PracticeAlgorithm
                 return -1;
         }
 
+        #endregion
 
+
+        #region | Linked List | 
+
+        [TestMethod]
+        public void MyLinkedListExp()
+        {
+            MyLinkedList myLinkedList = new MyLinkedList();
+            myLinkedList.AddAtHead(1);
+            myLinkedList.AddAtTail(3);
+            myLinkedList.AddAtIndex(1, 2);    // linked list becomes 1->2->3
+            myLinkedList.Get(1);              // return 2
+            myLinkedList.DeleteAtIndex(0);    // now the linked list is 1->3
+            myLinkedList.Get(0);              // return 3
+        }
 
         #endregion
     }

@@ -123,6 +123,7 @@
     <Compile Include="Leetcode\DPExample.cs" />
     <Compile Include="Leetcode\StockSpanner.cs" />
     <Compile Include="Leetcode_practice1.cs" />
+    <Compile Include="Model\MyLinkedList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Implementation.cs" />
     <Compile Include="Strings.cs" />
