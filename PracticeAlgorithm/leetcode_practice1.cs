@@ -2083,7 +2083,8 @@ namespace PracticeAlgorithm
         [TestMethod]
         public void FindMin()
         {
-            Print(FindMin(new int[] { 4, 5, 6, 7, 0, 1, 2}));
+            //Print(FindMin(new int[] { 4, 5, 6, 7, 0, 1, 2}));
+            Print(FindMin2(new int[] { 2, 1 }));
         }
         public int FindMin(int[] nums)
         {
@@ -2107,6 +2108,34 @@ namespace PracticeAlgorithm
                     left = mid + 1;
                 else
                     right = mid - 1;
+            }
+
+            return -1;
+        }
+        public int FindMin2(int[] nums)
+        {
+            if (nums == null) 
+                return -1;
+            else if (nums.Length == 1)
+                return nums[0];
+
+            int start = 0, end = nums.Length - 1;
+            if (nums[start] < nums[end])
+                return nums[start];
+
+            while(start < end)
+            {
+                int mid = start + (end - start) / 2;
+
+                if (nums[mid] > nums[mid + 1])
+                    return nums[mid + 1];
+                if (nums[mid -1] > nums[mid])
+                    return nums[mid];
+
+                if (nums[0] < nums[mid])
+                    start = mid + 1;
+                else
+                    end = mid - 1;
             }
 
             return -1;
@@ -2329,6 +2358,21 @@ namespace PracticeAlgorithm
             myLinkedList.Get(0);              // return 3
         }
 
+        [TestMethod]
+        public void HasCycle()
+        {
+            ListNode node = new ListNode(1);
+            Print(HasCycle(node));
+        }
+        public bool HasCycle(ListNode head)
+        {
+            bool hasCycle = false;
+
+            
+
+
+            return hasCycle;
+        }
         #endregion
     }
 
