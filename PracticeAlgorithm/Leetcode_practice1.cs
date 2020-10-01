@@ -2084,7 +2084,7 @@ namespace PracticeAlgorithm
         public void FindMin()
         {
             //Print(FindMin(new int[] { 4, 5, 6, 7, 0, 1, 2}));
-            Print(FindMin2(new int[] { 2, 1 }));
+            Print(FindMin2(new int[] { 3, 1 }));
         }
         public int FindMin(int[] nums)
         {
@@ -2112,9 +2112,9 @@ namespace PracticeAlgorithm
 
             return -1;
         }
-        public int FindMin2(int[] nums)
+        public int FindMin1(int[] nums)
         {
-            if (nums == null)
+            if (nums == null) 
                 return -1;
             else if (nums.Length == 1)
                 return nums[0];
@@ -2136,6 +2136,64 @@ namespace PracticeAlgorithm
                     start = mid + 1;
                 else
                     end = mid - 1;
+            }
+
+            return -1;
+        }
+
+        public int FindMin2(int[] nums)
+        {
+            int left = 0;
+            int right = nums.Length - 1;
+
+            while (left < right)
+            {
+                int mid = left + ((right - left) / 2);
+
+                if (nums[mid] < nums[right])
+                    right = mid;
+                else if (nums[mid] > nums[right])
+                    left = mid + 1;
+                else
+                    right--;
+            }
+
+            return nums[right];
+
+            int[] dist = nums.Distinct().ToArray();
+
+            if (dist.Length == 1)
+                return dist[0];
+
+            int start = 0, end = dist.Length - 1;
+            if (dist[start] < dist[end])
+                return dist[start];
+
+            while (start < end)
+            {
+                int mid = start + (end - start) / 2;
+
+                if (dist[mid] > dist[mid + 1])
+                    return dist[mid + 1];
+
+                if (dist[mid - 1] > dist[mid])
+                    return dist[mid];
+
+                if (dist[0] < dist[mid])
+                    start = mid + 1;
+                else
+                    end = mid - 1;
+                //int i = 0;
+                //while ((mid - i) > 0 && dist[mid] == dist[mid - i])
+                //    i++;
+                //if (dist[mid - i] > dist[mid])
+                //    return dist[mid];
+
+                    //int j = 0;
+                    //while ((mid + j) < (dist.Length - 1) && dist[mid] == dist[mid + j])
+                    //    j++;
+                    //if (dist[mid] > dist[mid + j])
+                    //    return dist[mid + j];
             }
 
             return -1;
