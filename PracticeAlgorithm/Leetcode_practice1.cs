@@ -2084,7 +2084,7 @@ namespace PracticeAlgorithm
         public void FindMin()
         {
             //Print(FindMin(new int[] { 4, 5, 6, 7, 0, 1, 2}));
-            Print(FindMin2(new int[] { 3, 1 }));
+            //Print(FindMin3(new int[] { 3, 1 }));
         }
         public int FindMin(int[] nums)
         {
@@ -2199,6 +2199,26 @@ namespace PracticeAlgorithm
             return -1;
         }
 
+        public int FindMin3(int[] nums)
+        {
+            int left = 0;
+            int right = nums.Length - 1;
+
+            while (left < right)
+            {
+                int mid = left + ((right - left) / 2);
+
+                if (nums[mid] < nums[right])
+                    right = mid;
+                else if (nums[mid] > nums[right])
+                    left = mid + 1;
+                else
+                    right--;
+            }
+
+            return nums[right];
+
+        }
         [TestMethod]
         public void SearchRange()
         {
@@ -2414,22 +2434,78 @@ namespace PracticeAlgorithm
             myLinkedList.Get(1);              // return 2
             myLinkedList.DeleteAtIndex(0);    // now the linked list is 1->3
             myLinkedList.Get(0);              // return 3
+
+          
         }
 
         [TestMethod]
         public void HasCycle()
         {
-            ListNode node = new ListNode(1);
-            Print(HasCycle(node));
+            //ListNode node = new ListNode(1);
+            //Print(HasCycle(node));
+
+            ListNode head = new ListNode(3);
+            ListNode sec = new ListNode(2);
+            head.next = sec;
+            ListNode third = new ListNode(0);
+            sec.next = third;
+            ListNode fourth = new ListNode(-4);
+            third.next = fourth;
+            fourth.next = sec;
+            DetectCycle(head);
         }
         public bool HasCycle(ListNode head)
         {
-            bool hasCycle = false;
+            if (head == null || head.next == null)
+                return false;
 
+            ListNode tortoise = head;
+            ListNode hare = head.next;
             
+            while( hare != null && tortoise != hare)
+            {
+                tortoise = tortoise.next;
+                if (hare.next != null)
+                    hare = hare.next.next;
+                else
+                    hare = null;
+            }
 
+            if (hare == null)
+                return false;
+            else
+                return true;
+        }
 
-            return hasCycle;
+        public ListNode DetectCycle(ListNode head)
+        {
+            if (head == null || head.next == null)
+                return null;
+
+            ListNode tortoise = head;
+            ListNode hare = head.next;
+            while (hare != null && tortoise != hare)
+            {
+                tortoise = tortoise.next;
+                if (hare.next != null)
+                    hare = hare.next.next;
+                else
+                    hare = null;
+            }
+
+            if (hare == null)
+                return null;
+            else
+            {
+                tortoise = head;
+                hare = hare.next;
+                while (tortoise != hare)
+                {
+                    hare = hare.next;
+                    tortoise = tortoise.next;
+                }
+                return tortoise;
+            }
         }
         #endregion
     }
