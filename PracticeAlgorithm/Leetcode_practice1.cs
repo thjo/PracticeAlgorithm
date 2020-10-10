@@ -24,7 +24,7 @@ namespace PracticeAlgorithm
         }
         void Print(int[] output, bool newLine = true)
         {
-            foreach(int o in output)
+            foreach (int o in output)
             {
                 Print(o, newLine);
             }
@@ -51,7 +51,7 @@ namespace PracticeAlgorithm
             {
                 Print(string.Format("{0}", next.val));
             }
-            
+
 
             Print("");
         }
@@ -92,7 +92,7 @@ namespace PracticeAlgorithm
         }
 
         #endregion
-          
+
         #region | Reverse Integer | 
 
         [TestMethod]
@@ -146,9 +146,9 @@ namespace PracticeAlgorithm
                 bool isPalindorme = true;
                 string origin = x.ToString();
                 int l = 0, r = origin.Length - 1;
-                while( 1 < r)
+                while (1 < r)
                 {
-                    if( origin[l] != origin[r])
+                    if (origin[l] != origin[r])
                     {
                         isPalindorme = false;
                         break;
@@ -217,7 +217,7 @@ namespace PracticeAlgorithm
         }
         public int coinChange2(int[] coins, int amount)
         {
-            if (amount == 0 )
+            if (amount == 0)
                 return 1;
             else if (amount < 1 || coins == null || coins.Length < 1)
                 return 0;
@@ -321,7 +321,7 @@ namespace PracticeAlgorithm
                     if (idx >= 0)
                     {
                         longestLen = Math.Max(longestLen, (cursor - startIdx));
-                        startIdx = idx+1;
+                        startIdx = idx + 1;
                     }
                 }
                 cursor++;
@@ -338,7 +338,7 @@ namespace PracticeAlgorithm
         [TestMethod]
         public void FindMedianSorted()
         {
-            Print(FindMedianSortedArrays(new int[] {1, 3}, new int[] { 2 }));
+            Print(FindMedianSortedArrays(new int[] { 1, 3 }, new int[] { 2 }));
             Print(FindMedianSortedArrays(new int[] { 1, 2 }, new int[] { 3, 4 }));
         }
 
@@ -346,16 +346,16 @@ namespace PracticeAlgorithm
         {
             double medianVal = 0;
             List<int> mergedList = new List<int>();
-            if ( (nums1 == null && nums2 == null)
+            if ((nums1 == null && nums2 == null)
                 || (nums1.Length < 1 && nums2.Length < 1))
             {
                 return medianVal;
             }
 
             int idx1 = 0, idx2 = 0;
-            while(idx1 < nums1.Length && idx2 < nums2.Length)
+            while (idx1 < nums1.Length && idx2 < nums2.Length)
             {
-                if(nums1[idx1] > nums2[idx2])
+                if (nums1[idx1] > nums2[idx2])
                 {
                     mergedList.Add(nums2[idx2]);
                     idx2++;
@@ -394,8 +394,8 @@ namespace PracticeAlgorithm
                 }
                 else
                 {
-                    Print(string.Format("{0}, {1}", mergedList[(mergedList.Count / 2)-1], mergedList[(mergedList.Count / 2)]));
-                    medianVal = (mergedList[(mergedList.Count / 2)-1] + mergedList[(mergedList.Count / 2)]) / 2.0;
+                    Print(string.Format("{0}, {1}", mergedList[(mergedList.Count / 2) - 1], mergedList[(mergedList.Count / 2)]));
+                    medianVal = (mergedList[(mergedList.Count / 2) - 1] + mergedList[(mergedList.Count / 2)]) / 2.0;
                 }
             }
             else if (mergedList.Count == 2)
@@ -586,10 +586,10 @@ namespace PracticeAlgorithm
 
         private string LongestCommonPrefix2(string[] strs)
         {
-            
+
             string prefix = string.Empty;
 
-            if( strs != null && strs.Length > 0)
+            if (strs != null && strs.Length > 0)
             {
                 if (strs.Length == 1)
                     prefix = strs[0];
@@ -633,7 +633,7 @@ namespace PracticeAlgorithm
             }
 
             return prefix;
-            
+
         }
 
         #endregion
@@ -649,7 +649,7 @@ namespace PracticeAlgorithm
         {
             StringBuilder retStr = null;
 
-            if (string.IsNullOrWhiteSpace(s) || numRows <= 1 )
+            if (string.IsNullOrWhiteSpace(s) || numRows <= 1)
                 return s;
 
             retStr = new StringBuilder();
@@ -659,11 +659,11 @@ namespace PracticeAlgorithm
 
             int startRow = 0;
             int currCursor = 0;
-            while(s.Length > currCursor)
+            while (s.Length > currCursor)
             {
                 if (startRow == numRows)
                     startRow += -2;
-                else if( startRow > 0)
+                else if (startRow > 0)
                     startRow--;
 
                 if (startRow == 0)
@@ -716,7 +716,7 @@ namespace PracticeAlgorithm
                 int evenLen = GetPalidromeLength(s, i, i + 1);
                 int maxLen = Math.Max(oddLen, evenLen);
 
-                if (maxLen > len )
+                if (maxLen > len)
                 {
                     len = maxLen;
                     start = i - (len - 1) / 2;
@@ -759,7 +759,7 @@ namespace PracticeAlgorithm
             //Print(MyAtoi("words and 987"));
             //Print(MyAtoi("-91283472332"));
             Print(MyAtoi("-2147483647"));
-            
+
         }
         private int MyAtoi(string str)
         {
@@ -945,9 +945,9 @@ namespace PracticeAlgorithm
                 return maxContainedWater;
 
             int startP = 0, endP = height.Length - 1;
-            while(startP < endP)
+            while (startP < endP)
             {
-                maxContainedWater = Math.Max(maxContainedWater, Math.Min(height[startP],height[endP]) * (endP - startP));
+                maxContainedWater = Math.Max(maxContainedWater, Math.Min(height[startP], height[endP]) * (endP - startP));
                 if (height[startP] < height[endP])
                     startP++;
                 else
@@ -992,12 +992,12 @@ namespace PracticeAlgorithm
             a = nums[0];
             for (int i = 0; i < nums.Length - 2; i++)
             {
-                if( i != 0)
+                if (i != 0)
                 {
-                    while (i < nums.Length -2 && a == nums[i])
+                    while (i < nums.Length - 2 && a == nums[i])
                         i++;
 
-                    if (i >= (nums.Length-2))
+                    if (i >= (nums.Length - 2))
                         break;
                 }
 
@@ -1006,7 +1006,7 @@ namespace PracticeAlgorithm
                     break;
                 int start = i + 1;
                 int end = nums.Length - 1;
-                if (start >= (nums.Length-1) || start >= end)
+                if (start >= (nums.Length - 1) || start >= end)
                     break;
 
                 while (start < end)
@@ -1017,7 +1017,7 @@ namespace PracticeAlgorithm
                     {
                         int[] tmp = new int[] { a, b, c };
                         result.Add(tmp.ToList<int>());
-                        
+
                         while (start + 1 <= end && nums[start] == nums[start + 1]) start++;
                         start++; end--;
                     }
@@ -1051,7 +1051,7 @@ namespace PracticeAlgorithm
                 int low = i + 1;
                 int high = nums.Length - 1;
 
-                while(low < high)
+                while (low < high)
                 {
                     int sum = nums[i] + nums[low] + nums[high];
                     if (closest == null || Math.Abs(target - sum) < Math.Abs(target - closest.Value))
@@ -1069,7 +1069,7 @@ namespace PracticeAlgorithm
                 while (i < nums.Length - 1 && nums[i] == nums[i + 1])
                     i++;
             }
-            
+
             return closest != null ? closest.Value : int.MaxValue;
         }
         #endregion
@@ -1104,7 +1104,7 @@ namespace PracticeAlgorithm
                     idxFirst++;
 
                 int idxSec = idxFirst + 1;
-                while(idxSec < len - 2)
+                while (idxSec < len - 2)
                 {
                     if ((target - nums[idxFirst] - nums[idxSec]) < 2 * nums[idxSec + 1])
                         break;
@@ -1115,7 +1115,7 @@ namespace PracticeAlgorithm
                     int left = idxSec + 1;
                     int right = len - 1;
                     int newTarget = target - nums[idxFirst] - nums[idxSec];
-                    while( left < right)
+                    while (left < right)
                     {
                         if (nums[left] + nums[right] > newTarget)
                             right--;
@@ -1182,7 +1182,7 @@ namespace PracticeAlgorithm
             }
 
 
-            for (int i = 1; i <=s.Length; i++)
+            for (int i = 1; i <= s.Length; i++)
             {
                 for (int j = 1; j <= p.Length; j++)
                 {
@@ -1192,7 +1192,7 @@ namespace PracticeAlgorithm
                     {
                         dp[i][j] = dp[i][j - 2];
                         if (dp[i][j] == false && (p[j - 2] == '.' || p[j - 2] == s[i - 1]))
-                            dp[i][j] = dp[i-1][j];
+                            dp[i][j] = dp[i - 1][j];
                     }
                     else
                         dp[i][j] = false;
@@ -1248,9 +1248,9 @@ namespace PracticeAlgorithm
         {
             IList<string> next = new List<string>();
 
-            foreach(string ori in combinations)
+            foreach (string ori in combinations)
             {
-                foreach(char c in letters)
+                foreach (char c in letters)
                 {
                     next.Add(ori + c);
                 }
@@ -1267,7 +1267,7 @@ namespace PracticeAlgorithm
         [TestMethod]
         public void ArrayPractice()
         {
-            Print(FindMaxConsecutiveOnes(new int[] { 1,0,1,1,0,1 }));
+            Print(FindMaxConsecutiveOnes(new int[] { 1, 0, 1, 1, 0, 1 }));
             Print(FindNumbers(new int[] { 555, 901, 482, 1771 }));
             Print(SortedSquares(new int[] { -4, -1, 0, 3, 10 }));
         }
@@ -1297,7 +1297,7 @@ namespace PracticeAlgorithm
             if (nums == null || nums.Length < 1)
                 return cntEvenNum;
 
-            foreach(int num in nums)
+            foreach (int num in nums)
             {
                 if (numOfDigits(num) % 2 == 0)
                     cntEvenNum++;
@@ -1324,7 +1324,7 @@ namespace PracticeAlgorithm
 
             int[] retArray = new int[A.Length];
 
-            for(int i = 0; i < A.Length; i++)
+            for (int i = 0; i < A.Length; i++)
             {
                 retArray[i] = A[i] * A[i];
             }
@@ -1366,7 +1366,7 @@ namespace PracticeAlgorithm
             }
 
             int newNext = buff.Count - n + 1;
-            if (buff.Count - 1  == n )
+            if (buff.Count - 1 == n)
                 return head.next;
             else if (newNext == buff.Count)
                 buff[buff.Count - n - 1].next = null;
@@ -1399,7 +1399,7 @@ namespace PracticeAlgorithm
 
             //Stack
             Stack<char> sBuff = new Stack<char>();
-            for(int i = 0; i < s.Length; i++)
+            for (int i = 0; i < s.Length; i++)
             {
                 int val = convertParentheses(s[i]);
                 if (val == 0)
@@ -1407,7 +1407,7 @@ namespace PracticeAlgorithm
                     isValid = false;
                     break;
                 }
-                if ( val < 10)
+                if (val < 10)
                     sBuff.Push(s[i]);
                 else
                 {
@@ -1423,7 +1423,7 @@ namespace PracticeAlgorithm
             }
             if (isValid == true)
                 isValid = (sBuff.Count == 0);
-            
+
 
             return isValid;
         }
@@ -1472,7 +1472,7 @@ namespace PracticeAlgorithm
 
             while (l1 != null && l2 != null)
             {
-                if( (l1.val > l2.val))
+                if ((l1.val > l2.val))
                 {
                     next.next = l2;
                     l2 = l2.next;
@@ -1502,7 +1502,7 @@ namespace PracticeAlgorithm
         {
             ListNode l1 = new ListNode(-1);
             l1.next = new ListNode(5);
-            
+
             ListNode l2 = new ListNode(1);
             l2.next = new ListNode(4);
             l2.next.next = new ListNode(6);
@@ -1550,11 +1550,11 @@ namespace PracticeAlgorithm
             else if (lists.Length == 1)
                 return lists[0];
 
-            int leftIdx = 0, rightIdx = lists.Length-1;
+            int leftIdx = 0, rightIdx = lists.Length - 1;
             while (rightIdx != 0)
             {
-                if(leftIdx !=0 && rightIdx != leftIdx)
-                    rightIdx = leftIdx-1;
+                if (leftIdx != 0 && rightIdx != leftIdx)
+                    rightIdx = leftIdx - 1;
                 leftIdx = 0;
                 while (leftIdx < rightIdx)
                 {
@@ -1563,7 +1563,7 @@ namespace PracticeAlgorithm
                     rightIdx--;
                 }
             }
-            
+
 
             return lists[0];
         }
@@ -1601,7 +1601,7 @@ namespace PracticeAlgorithm
                 return 0;
 
             int len = 1;
-            for(int i = 1; i < nums.Length; i++)
+            for (int i = 1; i < nums.Length; i++)
             {
                 if (nums[i - 1] != nums[i])
                 {
@@ -1629,7 +1629,7 @@ namespace PracticeAlgorithm
             if (nums == null || nums.Length < 1)
                 return i;
 
-            for(int j = 0; j < nums.Length; j++)
+            for (int j = 0; j < nums.Length; j++)
             {
                 if (nums[j] != val)
                     nums[i++] = nums[j];
@@ -1659,10 +1659,10 @@ namespace PracticeAlgorithm
             else if (string.IsNullOrWhiteSpace(haystack))
                 return startIdx;
 
-            for(int i = 0; i < haystack.Length; i++)
+            for (int i = 0; i < haystack.Length; i++)
             {
                 int n = 0;
-                if ( (haystack.Length - i) < needle.Length )
+                if ((haystack.Length - i) < needle.Length)
                     break;
                 for (int j = i; j < haystack.Length; j++)
                 {
@@ -1688,7 +1688,7 @@ namespace PracticeAlgorithm
         [TestMethod]
         public void SearchInsert()
         {
-            Print(SearchInsert(new int[] {1,3,5,6 }, 5));
+            Print(SearchInsert(new int[] { 1, 3, 5, 6 }, 5));
         }
         public int SearchInsert(int[] nums, int target)
         {
@@ -1724,7 +1724,7 @@ namespace PracticeAlgorithm
             if (n == 1)
                 return startSTr;
 
-            for (int i = 0; i < n-1; i++)
+            for (int i = 0; i < n - 1; i++)
             {
                 startSTr = SayStr(startSTr);
             }
@@ -1739,7 +1739,7 @@ namespace PracticeAlgorithm
             int count = 1;
             for (int i = 1; i < countStr.Length; i++)
             {
-                if(previousNum != countStr[i])
+                if (previousNum != countStr[i])
                 {
                     sbRet.AppendFormat("{0}{1}", count, previousNum);
                     previousNum = countStr[i];
@@ -1797,7 +1797,7 @@ namespace PracticeAlgorithm
                 return numOfWord;
 
             s = s.TrimEnd();
-            for(int i = s.Length-1; i >= 0; i--)
+            for (int i = s.Length - 1; i >= 0; i--)
             {
                 if (s[i] == ' ' && numOfWord == 0)
                     continue;
@@ -1894,7 +1894,7 @@ namespace PracticeAlgorithm
 
 
         #region | Check If Exist |
-        
+
         [TestMethod]
         public void CheckIfExist()
         {
@@ -1908,7 +1908,8 @@ namespace PracticeAlgorithm
                 for (int i = 0; i < arr.Length; i++)
                 {
                     int n = arr[i];
-                    for (int j = i + 1; j < arr.Length; j++) {
+                    for (int j = i + 1; j < arr.Length; j++)
+                    {
                         if (n == (2 * arr[j]) || (2 * n) == arr[j])
                             return true;
                     }
@@ -1925,7 +1926,7 @@ namespace PracticeAlgorithm
         [TestMethod]
         public void ValidMountainArray()
         {
-            Print(ValidMountainArray(new int[] { 0,3,2,1 }));
+            Print(ValidMountainArray(new int[] { 0, 3, 2, 1 }));
         }
 
         public bool ValidMountainArray(int[] A)
@@ -1938,16 +1939,16 @@ namespace PracticeAlgorithm
 
                 for (int i = 2; i < A.Length; i++)
                 {
-                    if(A[i - 1] == A[i])   
+                    if (A[i - 1] == A[i])
                         return false;
-                    else if( A[i -1] > A[i])
+                    else if (A[i - 1] > A[i])
                     {
                         if (flag == 1)
                             flag = -1;
                     }
                     else
                     {
-                        if ( flag == -1)
+                        if (flag == -1)
                             return false;
                     }
                 }
@@ -1969,7 +1970,7 @@ namespace PracticeAlgorithm
         [TestMethod]
         public void BinarySearch()
         {
-            Print(SearchB(new int[] { -1,0,3,5,9,12 }, 2));
+            Print(SearchB(new int[] { -1, 0, 3, 5, 9, 12 }, 2));
         }
         public int SearchB(int[] nums, int target)
         {
@@ -2022,7 +2023,7 @@ namespace PracticeAlgorithm
         [TestMethod]
         public void Search()
         {
-            Print(Search(new int[] {5,1,3}, 5));
+            Print(Search(new int[] { 5, 1, 3 }, 5));
         }
         public int Search(int[] nums, int target)
         {
@@ -2030,7 +2031,7 @@ namespace PracticeAlgorithm
             int end = nums.Length - 1;
             while (start <= end)
             {
-                int mid = start + (end-start) / 2;
+                int mid = start + (end - start) / 2;
                 if (nums[mid] == target)
                     return mid;
 
@@ -2067,8 +2068,8 @@ namespace PracticeAlgorithm
             else if (nums.Length == 1)
                 return 0;
 
-            int left = 0, right = nums.Length -1;
-            while( left < right)
+            int left = 0, right = nums.Length - 1;
+            while (left < right)
             {
                 int mid = left + (right - left) / 2;
                 if (nums[mid] > nums[mid + 1])
@@ -2114,7 +2115,7 @@ namespace PracticeAlgorithm
         }
         public int FindMin1(int[] nums)
         {
-            if (nums == null) 
+            if (nums == null)
                 return -1;
             else if (nums.Length == 1)
                 return nums[0];
@@ -2123,13 +2124,13 @@ namespace PracticeAlgorithm
             if (nums[start] < nums[end])
                 return nums[start];
 
-            while(start < end)
+            while (start < end)
             {
                 int mid = start + (end - start) / 2;
 
                 if (nums[mid] > nums[mid + 1])
                     return nums[mid + 1];
-                if (nums[mid -1] > nums[mid])
+                if (nums[mid - 1] > nums[mid])
                     return nums[mid];
 
                 if (nums[0] < nums[mid])
@@ -2189,11 +2190,11 @@ namespace PracticeAlgorithm
                 //if (dist[mid - i] > dist[mid])
                 //    return dist[mid];
 
-                    //int j = 0;
-                    //while ((mid + j) < (dist.Length - 1) && dist[mid] == dist[mid + j])
-                    //    j++;
-                    //if (dist[mid] > dist[mid + j])
-                    //    return dist[mid + j];
+                //int j = 0;
+                //while ((mid + j) < (dist.Length - 1) && dist[mid] == dist[mid + j])
+                //    j++;
+                //if (dist[mid] > dist[mid + j])
+                //    return dist[mid + j];
             }
 
             return -1;
@@ -2222,7 +2223,7 @@ namespace PracticeAlgorithm
         [TestMethod]
         public void SearchRange()
         {
-            SearchRange(new int[] { 1, 4  }, 4);
+            SearchRange(new int[] { 1, 4 }, 4);
         }
         public int[] SearchRange(int[] nums, int target)
         {
@@ -2234,7 +2235,7 @@ namespace PracticeAlgorithm
             int left = -1, right = -1;
             int start = 0, end = nums.Length - 1;
 
-            while(start <= end)
+            while (start <= end)
             {
                 int mid = start + (end - start) / 2;
                 if (nums[mid] == target)
@@ -2256,14 +2257,14 @@ namespace PracticeAlgorithm
                     end = mid - 1;
             }
 
-            return new int[] { left, right};
+            return new int[] { left, right };
         }
         private int searchLinear(int[] nums, int target, bool isBackward, int startIdx)
         {
             int retVal = -1;
-            if(isBackward)
+            if (isBackward)
             {
-                for(int i = startIdx; i >= 0; i--)
+                for (int i = startIdx; i >= 0; i--)
                 {
                     if (nums[i] != target)
                         return retVal;
@@ -2293,7 +2294,7 @@ namespace PracticeAlgorithm
                 n *= -1;
             }
 
-            return MyPowSub(x,n);
+            return MyPowSub(x, n);
         }
         private double MyPowSub(double x, int n)
         {
@@ -2347,7 +2348,8 @@ namespace PracticeAlgorithm
             while (start <= end)
             {
                 int mid = start + (end - start) / 2;
-                if (letters[mid] <= target) {
+                if (letters[mid] <= target)
+                {
                     start = mid + 1;
                 }
                 else
@@ -2435,7 +2437,7 @@ namespace PracticeAlgorithm
             myLinkedList.DeleteAtIndex(0);    // now the linked list is 1->3
             myLinkedList.Get(0);              // return 3
 
-          
+
         }
 
         [TestMethod]
@@ -2461,8 +2463,8 @@ namespace PracticeAlgorithm
 
             ListNode tortoise = head;
             ListNode hare = head.next;
-            
-            while( hare != null && tortoise != hare)
+
+            while (hare != null && tortoise != hare)
             {
                 tortoise = tortoise.next;
                 if (hare.next != null)
@@ -2507,6 +2509,114 @@ namespace PracticeAlgorithm
                 return tortoise;
             }
         }
+
+        #endregion
+
+
+        #region | Intersection of Two Arrays | 
+
+        [TestMethod]
+        public void Intersection()
+        {
+            //Intersection(new)
+        }
+        public int[] Intersection(int[] nums1, int[] nums2)
+        {
+            List<int> result = new List<int>();
+            Array.Sort(nums1);
+            for (int i = 0; i < nums2.Length; i++) {
+                if (BinarySearch(nums1, 0, nums1.Length - 1, nums2[i]) > -1
+                    && result.Contains(nums2[i]) == false)
+                    result.Add(nums2[i]);
+            }
+            return result.ToArray();
+
+        }
+        public int[] Intersect(int[] nums1, int[] nums2)
+        {
+            if (nums1.Length > nums2.Length)
+                return Intersect(nums2, nums1);
+
+            Dictionary<int, int> map = new Dictionary<int, int>();
+            foreach(int i in nums1){
+                if (map.ContainsKey(i))
+                    map[i]++;
+                else
+                    map.Add(i, 1);
+            }
+
+            List<int> result = new List<int>();
+            foreach (int j in nums2)
+            {
+                if (map.ContainsKey(j) && map[j] > 0)
+                {
+                    result.Add(j);
+                    map[j]--;
+                }
+            }
+
+            return result.ToArray();
+        }
+
+
+        #endregion
+
+        #region | Two Sum | 
+
+        [TestMethod]
+        public void TwoSum()
+        {
+
+        }
+        public int[] TwoSum(int[] numbers, int target)
+        {
+            int left = 0, right = numbers.Length - 1;
+
+            while(left < right)
+            {
+                if (numbers[left] + numbers[right] == target)
+                    return new int[] { left + 1, right + 1 };
+                else if (numbers[left] + numbers[right] > target)
+                    right--;
+                else
+                    left++;
+            }
+
+            return null;
+        }
+        #endregion
+
+
+        #region | FindDuplicate | 
+
+        [TestMethod]
+        public void FindDuplicate()
+        {
+            Print(FindDuplicate(new int[] { 1,3,4,2,2 }));
+        }
+        public int FindDuplicate(int[] nums)
+        {
+            int tortoise = nums[0];
+            int hare = nums[0];
+            do
+            {
+                tortoise = nums[tortoise];
+                hare = nums[nums[hare]];
+            } while (tortoise != hare);
+
+            // Find the "entrance" to the cycle.
+            tortoise = nums[0];
+            while (tortoise != hare)
+            {
+                tortoise = nums[tortoise];
+                hare = nums[hare];
+            }
+
+            return hare;
+
+
+        }
+
         #endregion
     }
 
