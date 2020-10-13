@@ -2618,6 +2618,53 @@ namespace PracticeAlgorithm
         }
 
         #endregion
+
+        #region | FindMedianSortedArrays | 
+
+        [TestMethod]
+        public void FindMedianSortedArrays2()
+        {
+            Print(FindMedianSortedArrays2(new int[] { 1, 2 }, new int[] { 3, 4 }));
+            Print(FindMedianSortedArrays2(new int[] { 1, 3 }, new int[] { 2 }));
+        }
+        public double FindMedianSortedArrays2(int[] nums1, int[] nums2)
+        {
+            if (nums1.Length > nums2.Length)
+                return FindMedianSortedArrays2(nums2, nums1);
+
+            double avg = -1.0;
+
+            int xLen = nums1.Length, yLen = nums2.Length;
+
+            int start = 0, end = xLen;
+            while (start <= end)
+            {
+                int partitionX = (start + end) / 2;
+                int partitionY = (xLen + yLen + 1) / 2 - partitionX;
+
+                int maxLeftX = partitionX == 0 ? int.MinValue : nums1[partitionX - 1];
+                int minRightX = partitionX == xLen ? int.MaxValue : nums1[partitionX];
+                int maxLeftY = partitionY == 0 ? int.MinValue : nums2[partitionY - 1];
+                int minRightY = partitionY == yLen ? int.MaxValue : nums2[partitionY];
+
+                if (maxLeftX <= minRightY & maxLeftY <= minRightX)
+                {
+                    if ((xLen + yLen) % 2 == 0)
+                        return ((double)Math.Max(maxLeftX, maxLeftY) + Math.Min(minRightX, minRightY)) / 2.0;
+                    else
+                        return (double)Math.Max(maxLeftX, maxLeftY);
+                }
+                else if (maxLeftX > minRightY)
+                {
+                    end = partitionX - 1;
+                }
+                else
+                    start = partitionX + 1;
+            }
+
+            return avg;
+        }
+        #endregion
     }
 
     //Definition for singly-linked list.
