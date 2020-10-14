@@ -2665,6 +2665,19 @@ namespace PracticeAlgorithm
             return avg;
         }
         #endregion
+
+        #region | SmallestDistancePair | 
+
+        [TestMethod]
+        public void SmallestDistancePair()
+        {
+            Print(SmallestDistancePair(new int[] { }, 3));
+        }
+        public int SmallestDistancePair(int[] nums, int k)
+        {
+            return 0;
+        }
+        #endregion
     }
 
     //Definition for singly-linked list.
