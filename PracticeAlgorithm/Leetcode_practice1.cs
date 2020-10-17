@@ -2675,9 +2675,58 @@ namespace PracticeAlgorithm
         }
         public int SmallestDistancePair(int[] nums, int k)
         {
-            return 0;
+            Array.Sort(nums);
+
+            int[] count = new int[nums[nums.Length-1] + 1];
+
+            for(int i = 0; i < nums.Length; i++)
+            {
+                for (int j = i + 1; j < nums.Length; j++)
+                    count[nums[j] - nums[i]]++;
+            }
+
+            int n = 0;
+            for(int i = 0; i < count.Length; i++)
+            {
+                n += count[i];
+
+                if (n >= k)
+                    return i;
+            }
+            return -1;
         }
         #endregion
+
+
+        #region | | 
+
+        [TestMethod]
+        public void GetIntersectionNode()
+        {
+
+        }
+        public ListNode GetIntersectionNode(ListNode headA, ListNode headB)
+        {
+            HashSet<ListNode> hashSet = new HashSet<ListNode>();
+            while (headA != null)
+            {
+                hashSet.Add(headA);
+                headA = headA.next;
+            }
+
+            while (headB != null)
+            {
+                if (hashSet.Contains(headB))
+                {
+                    return headB;
+                }
+                headB = headB.next;
+            }
+
+            return null;
+        }
+        #endregion
+
     }
 
     //Definition for singly-linked list.
