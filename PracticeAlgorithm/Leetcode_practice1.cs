@@ -1347,8 +1347,11 @@ namespace PracticeAlgorithm
             node.next.next.next = new ListNode(4);
             node.next.next.next.next = new ListNode(5);
             RemoveNthFromEnd(node, 2);
+            //ListNode node = new ListNode(1);
+            //node.next = new ListNode(2);
+            //RemoveNthFromEnd(node, 1);
         }
-        public ListNode RemoveNthFromEnd(ListNode head, int n)
+        public ListNode RemoveNthFromEnd1(ListNode head, int n)
         {
             if (n == 0 || head == null || head.next == null)
                 return null;
@@ -1372,6 +1375,47 @@ namespace PracticeAlgorithm
                 buff[buff.Count - n - 1].next = null;
             else
                 buff[buff.Count - n - 1].next = buff[newNext];
+
+            return head;
+        }
+        public ListNode RemoveNthFromEnd(ListNode head, int n)
+        {
+            if (head == null)
+                return null;
+            else if (head.next == null && n > 0)
+                return null;
+
+            int len = 1;
+            ListNode scanLen = head;
+            while (scanLen != null && scanLen.next != null)
+            {
+                scanLen = scanLen.next.next;
+                if (scanLen != null)
+                    len += 2;
+                else
+                    len += 1;                
+            }
+
+            int rmIdx = len - n;
+            if (rmIdx == 0)
+                head = head.next;
+
+            else
+            {
+                ListNode currNode = head;
+                int currIdx = 0;
+                while (currIdx < rmIdx)
+                {
+                    if(currIdx == (rmIdx-1))
+                    {
+                        currNode.next = currNode.next != null ? currNode.next.next : null;
+                        break;
+                    }
+
+                    currNode = currNode.next;
+                    currIdx++;
+                }
+            }
 
             return head;
         }
