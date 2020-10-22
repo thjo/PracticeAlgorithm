@@ -2771,6 +2771,58 @@ namespace PracticeAlgorithm
         }
         #endregion
 
+
+        #region | Two-Pointer in Linked List | 
+
+        //// Initialize slow & fast pointers
+        //ListNode slow = head;
+        //ListNode fast = head;
+        ///**
+        // * Change this condition to fit specific problem.
+        // * Attention: remember to avoid null-pointer error
+        // **/
+        //while (slow != null && fast != null && fast.next != null) {
+        //    slow = slow.next;           // move slow pointer one step each time
+        //    fast = fast.next.next;      // move fast pointer two steps each time
+        //    if (slow == fast) {         // change this condition to fit specific problem
+        //        return true;
+        //    }
+        //}
+        //return false;   // change return value to fit specific problem
+
+        #endregion
+
+        #region | Reverse Linked List | 
+
+        [TestMethod]
+        public void ReverseList()
+        {
+            ListNode node = new ListNode(1);
+            node.next = new ListNode(2);
+            node.next.next = new ListNode(3);
+            node.next.next.next = new ListNode(4);
+            node.next.next.next.next = new ListNode(5);
+            ReverseList(node);
+        }
+        public ListNode ReverseList(ListNode head)
+        {
+            if (head == null || head.next == null)
+                return head;
+
+            ListNode currNode = head.next;
+            while(currNode != null)
+            {
+                //Move currNode to Head
+                ListNode nextNode = currNode.next;
+                head.next = nextNode;
+                currNode.next = head;
+                head = currNode;
+                currNode = nextNode;
+            }
+
+            return head;
+        }
+        #endregion
     }
 
     //Definition for singly-linked list.
