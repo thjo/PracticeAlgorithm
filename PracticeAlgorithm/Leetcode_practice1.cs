@@ -2809,20 +2809,77 @@ namespace PracticeAlgorithm
             if (head == null || head.next == null)
                 return head;
 
-            ListNode currNode = head.next;
-            while(currNode != null)
+            ListNode preNode = null;
+            ListNode currNode = head;
+            while (currNode != null)
             {
                 //Move currNode to Head
                 ListNode nextNode = currNode.next;
-                head.next = nextNode;
-                currNode.next = head;
-                head = currNode;
+                currNode.next = preNode;
+
+                preNode = currNode;
                 currNode = nextNode;
             }
 
-            return head;
+            return preNode;
         }
         #endregion
+
+        #region | RemoveElements | 
+
+        [TestMethod]
+        public void RemoveElements()
+        {
+
+        }
+
+        public ListNode RemoveElements(ListNode head, int val)
+        {
+            if (head == null)
+                return head;
+
+            ListNode preNode = null;
+            ListNode currNode = head;
+            while(currNode != null)
+            {
+                ListNode nextNode = currNode.next;
+                if(currNode.val == val)
+                {
+                    if (preNode != null)
+                        preNode.next = nextNode;
+                    else
+                        head = nextNode;
+                }
+                else
+                    preNode = currNode;
+
+                currNode = nextNode;
+            }
+
+            if (preNode == null)
+                return null;
+            else
+                return head;
+        }
+
+        #endregion
+
+
+        #region | OddEvenList | 
+
+        [TestMethod]
+        public void OddEvenList()
+        {
+
+        }
+
+        public ListNode OddEvenList(ListNode head)
+        {
+            return null;
+        }
+        #endregion
+
+
     }
 
     //Definition for singly-linked list.
