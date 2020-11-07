@@ -2870,7 +2870,7 @@ namespace PracticeAlgorithm
         [TestMethod]
         public void OddEvenList()
         {
-
+            OddEvenList(null);
         }
 
         public ListNode OddEvenList(ListNode head)
