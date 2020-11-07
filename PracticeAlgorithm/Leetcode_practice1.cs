@@ -2889,6 +2889,60 @@ namespace PracticeAlgorithm
 
             return head;
         }
+
+        #endregion
+
+        #region | Palindrome Linked List | 
+
+        [TestMethod]
+        public void IsPalindrome()
+        {
+
+        }
+
+        public bool IsPalindrome(ListNode head)
+        {
+            if (head == null || head.next == null)
+                return true;
+
+            ListNode fast = head;
+            ListNode slow = head;
+
+            while(fast.next != null && fast.next.next != null)
+            {
+                fast = fast.next.next;
+                slow = slow.next;
+            }
+
+            ListNode firstHalfHead = head;
+            ListNode secHalfHead = ReverseListNode(slow.next);
+            while(firstHalfHead != null && secHalfHead != null)
+            {
+                if (firstHalfHead.val != secHalfHead.val)
+                    return false;
+
+                firstHalfHead = firstHalfHead.next;
+                secHalfHead = secHalfHead.next;
+            }
+
+            return true;
+        }
+
+        public ListNode ReverseListNode(ListNode head)
+        {
+            ListNode newHead = null;
+
+            while(head != null)
+            {
+                ListNode next = head.next;
+                head.next = newHead;
+                newHead = head;
+                head = next;
+            }
+
+            return newHead;
+        }
+
         #endregion
 
 
