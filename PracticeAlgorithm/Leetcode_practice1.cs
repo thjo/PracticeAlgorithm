@@ -2897,7 +2897,7 @@ namespace PracticeAlgorithm
         [TestMethod]
         public void IsPalindrome()
         {
-
+            IsPalindrome(null);
         }
 
         public bool IsPalindrome(ListNode head)
@@ -2946,6 +2946,41 @@ namespace PracticeAlgorithm
         #endregion
 
 
+        #region | Binary Tree | 
+
+        [TestMethod]
+        public void BinayTreeTraverse()
+        {
+
+        }
+        public IList<int> PreorderTraversal(TreeNode root)
+        {
+            IList<int> ret = new List<int>();
+            if (root == null)
+                return ret;
+
+            TreeNode next = root;
+            while(next != null)
+            {
+                ret.Add(root.val);
+                while (next.left != null)
+                {
+                    ret.Add(root.val);
+                    next = next.left;
+                }
+
+                while (next.right != null)
+                {
+                    ret.Add(root.val);
+                    next = next.right;
+                }
+            }
+
+            return ret;
+        }
+
+
+        #endregion
     }
 
     //Definition for singly-linked list.
@@ -2959,4 +2994,17 @@ namespace PracticeAlgorithm
             this.next = next;
         }
     }
+
+    //Definition for a binary tree node.
+    public class TreeNode {
+        public int val;
+        public TreeNode left;
+        public TreeNode right;
+        public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
+    }
+
 }
