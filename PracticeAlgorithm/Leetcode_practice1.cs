@@ -2955,29 +2955,53 @@ namespace PracticeAlgorithm
         }
         public IList<int> PreorderTraversal(TreeNode root)
         {
-            IList<int> ret = new List<int>();
-            if (root == null)
-                return ret;
-
-            TreeNode next = root;
-            while(next != null)
-            {
-                ret.Add(root.val);
-                while (next.left != null)
-                {
-                    ret.Add(root.val);
-                    next = next.left;
-                }
-
-                while (next.right != null)
-                {
-                    ret.Add(root.val);
-                    next = next.right;
-                }
-            }
-
-            return ret;
+            IList<int> print = new List<int>();
+            PreorderBTree(root, print);
+            return print;
         }
+        private void PreorderBTree(TreeNode root, IList<int> print)
+        {
+            if (root == null)
+                return;
+       
+            print.Add(root.val);
+            PreorderBTree(root.left, print);
+            PreorderBTree(root.right, print);
+        }
+
+        public IList<int> InorderTraversal(TreeNode root)
+        {
+            IList<int> print = new List<int>();
+            InorderBTree(root, print);
+            return print;
+        }
+        private void InorderBTree(TreeNode root, IList<int> print)
+        {
+            if (root == null)
+                return;
+
+            InorderBTree(root.left, print);
+            print.Add(root.val);
+            InorderBTree(root.right, print);
+        }
+
+        public IList<int> PostorderTraversal(TreeNode root)
+        {
+            List<int> result = new List<int>();
+            PostorderBTree(root, result);
+
+            return result;
+        }
+        private void PostorderBTree(TreeNode root, List<int> result)
+        {
+            if (root == null) return;
+
+            PostorderBTree(root.left, result);
+            PostorderBTree(root.right, result);
+            result.Add(root.val);
+        }
+
+
 
 
         #endregion
