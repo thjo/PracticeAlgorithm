@@ -2951,8 +2951,11 @@ namespace PracticeAlgorithm
         [TestMethod]
         public void BinayTreeTraverse()
         {
-
+            PreorderTraversal(null);
+            InorderTraversal(null);
+            PostorderTraversal(null);
         }
+
         public IList<int> PreorderTraversal(TreeNode root)
         {
             IList<int> print = new List<int>();
@@ -3000,8 +3003,6 @@ namespace PracticeAlgorithm
             PostorderBTree(root.right, result);
             result.Add(root.val);
         }
-
-
 
 
         #endregion
