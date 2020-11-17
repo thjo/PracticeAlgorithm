@@ -3005,6 +3005,32 @@ namespace PracticeAlgorithm
         }
 
 
+        public IList<IList<int>> LevelOrder(TreeNode root)
+        {
+            IList<IList<int>> lvOrder = new List<IList<int>>();
+            int lv = 1;
+            PreorderBTree(root, lvOrder, lv);
+
+
+            return lvOrder;
+        }
+        private void PreorderBTree(TreeNode root, IList<IList<int>> lvOrder, int lv)
+        {
+            if (root == null)
+                return;
+
+            if (lvOrder.Count >= lv)
+                lvOrder[lv - 1].Add(root.val);
+            else
+            {
+                IList<int> rootList = new List<int>();
+                rootList.Add(root.val);
+                lvOrder.Add(rootList);
+            }
+            PreorderBTree(root.left, lvOrder, lv+1);
+            PreorderBTree(root.right, lvOrder, lv + 1);
+        }
+
         #endregion
     }
 
