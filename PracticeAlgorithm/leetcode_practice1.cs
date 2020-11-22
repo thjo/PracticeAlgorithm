@@ -3004,7 +3004,6 @@ namespace PracticeAlgorithm
             result.Add(root.val);
         }
 
-
         public IList<IList<int>> LevelOrder(TreeNode root)
         {
             IList<IList<int>> lvOrder = new List<IList<int>>();
@@ -3030,6 +3029,9 @@ namespace PracticeAlgorithm
             PreorderBTree(root.left, lvOrder, lv+1);
             PreorderBTree(root.right, lvOrder, lv + 1);
         }
+
+
+
 
 
 
