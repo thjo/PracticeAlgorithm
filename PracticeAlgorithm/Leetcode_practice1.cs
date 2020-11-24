@@ -3030,8 +3030,63 @@ namespace PracticeAlgorithm
             PreorderBTree(root.right, lvOrder, lv + 1);
         }
 
+        private int MaximumDepthAnswer = 0;
+        private void MaximumDepth(TreeNode root, int depth)
+        {
+            if (root == null)
+                return;
 
+            if (root.left == null && root.right == null)
+                MaximumDepthAnswer = Math.Max(MaximumDepthAnswer, depth);
 
+            MaximumDepth(root.left, depth + 1);
+            MaximumDepth(root.right, depth + 1);
+        }
+        private int MaximumDepthBottomUp(TreeNode root)
+        {
+            if (root == null)
+                return 0;
+
+            int leftDepth = MaximumDepthBottomUp(root.left);
+            int rightDepth = MaximumDepthBottomUp(root.right);
+
+            return Math.Max(leftDepth, rightDepth) + 1;
+        }
+
+        [TestMethod]
+        public void MaxDepth()
+        {
+
+        }
+        public int MaxDepth(TreeNode root)
+        {
+            //Top-Down
+            int answer = 0;
+            MaxDepthopDown(root, 1, ref answer);
+            return answer;
+
+            //Bottom-Up
+            if (root == null)
+                return 0;
+
+            int leftDepth = MaxDepth(root.left);
+            int rightDepth = MaxDepth(root.right);
+
+            return Math.Max(leftDepth, rightDepth) + 1;
+        }
+        public void MaxDepthopDown(TreeNode root, int depth, ref int finalAnswer)
+        {
+            if (root == null)
+                return;
+            else
+            {
+                if (root.left == null && root.right == null)
+                    finalAnswer = Math.Max(depth, finalAnswer);
+            }
+
+            MaxDepthopDown(root.left, depth + 1, ref finalAnswer);
+            MaxDepthopDown(root.right, depth + 1, ref finalAnswer);
+        }
 
 
 
