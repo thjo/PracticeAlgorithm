@@ -3053,17 +3053,12 @@ namespace PracticeAlgorithm
             return Math.Max(leftDepth, rightDepth) + 1;
         }
 
-        [TestMethod]
-        public void MaxDepth()
-        {
-
-        }
         public int MaxDepth(TreeNode root)
         {
-            //Top-Down
-            int answer = 0;
-            MaxDepthopDown(root, 1, ref answer);
-            return answer;
+            ////Top-Down
+            //int answer = 0;
+            //MaxDepthopDown(root, 1, ref answer);
+            //return answer;
 
             //Bottom-Up
             if (root == null)
@@ -3086,6 +3081,64 @@ namespace PracticeAlgorithm
 
             MaxDepthopDown(root.left, depth + 1, ref finalAnswer);
             MaxDepthopDown(root.right, depth + 1, ref finalAnswer);
+        }
+
+
+        public bool IsSymmetric(TreeNode root)
+        {
+            if (root == null)
+                return true;
+
+            return IsMirror(root.left, root.right);
+        }
+        public bool IsMirror(TreeNode tree1, TreeNode tree2)
+        {
+            if (tree1 == null && tree2 == null)
+                return true;
+            else if (tree1 == null || tree2 == null)
+                return false;
+
+            if (tree1.val == tree2.val)
+            {
+                return IsMirror(tree1.left, tree2.right) && IsMirror(tree1.right, tree2.left);
+            }
+            else
+                return false;
+        }
+
+
+        public bool HasPathSum(TreeNode root, int sum)
+        {
+            if (root == null)
+                return false;
+
+            if (sum - root.val == 0 && root.left == null && root.right == null)
+                return true;
+
+            if (HasPathSum(root.left, (sum - root.val)))
+                return true;
+            else if (HasPathSum(root.right, (sum - root.val)))
+                return true;
+
+            return false;
+        }
+
+        [TestMethod]
+        public void BuildTree()
+        {
+            BuildTree(new int[] { 9, 3, 15, 20, 7 }, new int[] { 9, 15, 7, 20, 3 });
+        }
+        public TreeNode BuildTree(int[] inorder, int[] postorder)
+        {
+            if (postorder == null || postorder.Length < 1)
+                return null;
+
+            //TreeNode root = new TreeNode(postorder[postorder.Length-1]);
+            //int index = Array.FindIndex(inorder, val => val.Equals(root.val));
+
+            //root.left = BuildTree(inorder.Take(index).ToArray(), postorder.Take(index).ToArray());
+            //root.right = BuildTree(inorder.Skip(index+1).ToArray(), postorder.Skip(index).Take(postorder.Length-index-1).ToArray());
+            //return root;
         }
 
 
