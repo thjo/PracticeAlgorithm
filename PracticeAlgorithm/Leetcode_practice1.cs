@@ -3126,23 +3126,95 @@ namespace PracticeAlgorithm
         [TestMethod]
         public void BuildTree()
         {
-            BuildTree(new int[] { 9, 3, 15, 20, 7 }, new int[] { 9, 15, 7, 20, 3 });
+            TreeNode val = null;
+            //BuildTreeInPost(new int[] { 9, 3, 15, 20, 7 }, new int[] { 9, 15, 7, 20, 3 });
+
+            //BuildTreePreIn(new int[] { 3, 9, 20, 15, 7 }, new int[] { 9, 3, 1, 20, 7 });
+            val = BuildTreePreIn(new int[] { 1, 2, 3 }, new int[] { 3, 2, 1 });
+
         }
-        public TreeNode BuildTree(int[] inorder, int[] postorder)
+        public TreeNode BuildTreeInPost(int[] inorder, int[] postorder)
         {
             if (postorder == null || postorder.Length < 1)
                 return null;
 
-            //TreeNode root = new TreeNode(postorder[postorder.Length-1]);
+            Dictionary<int, int> dicOrder = new Dictionary<int, int>();
+            for(int i = 0; i < inorder.Length; i++)
+                dicOrder.Add(inorder[i], i);
+
+            //TreeNode root = new TreeNode(postorder[postorder.Length - 1]);
             //int index = Array.FindIndex(inorder, val => val.Equals(root.val));
 
             //root.left = BuildTree(inorder.Take(index).ToArray(), postorder.Take(index).ToArray());
-            //root.right = BuildTree(inorder.Skip(index+1).ToArray(), postorder.Skip(index).Take(postorder.Length-index-1).ToArray());
+            //root.right = BuildTree(inorder.Skip(index + 1).ToArray(), postorder.Skip(index).Take(postorder.Length - index - 1).ToArray());
             //return root;
+            return BuildTreeInPostEx(inorder, 0, inorder.Length -1
+                             , postorder, 0, postorder.Length - 1
+                             , dicOrder);
+        }
+
+        public TreeNode BuildTreeInPostEx(int[] inorder, int inStart, int inEnd
+                                  , int[] postorder, int postStart, int postEnd
+                                  , Dictionary<int, int> dicOrder)
+        {
+            if (inStart > inEnd || postStart > postEnd )
+                return null;
+
+            TreeNode root = new TreeNode(postorder[postEnd]);
+
+
+            int idx = dicOrder[root.val];
+
+            root.left = BuildTreeInPostEx(inorder, inStart, idx - 1
+                                   , postorder, postStart, postStart + (idx - inStart - 1)
+                                   , dicOrder);
+            root.right = BuildTreeInPostEx(inorder, idx + 1, inEnd
+                                    , postorder, postStart + (idx - inStart - 1) + 1, postEnd - 1
+                                    , dicOrder);
+
+            return root;
         }
 
 
+        public TreeNode BuildTreePreIn(int[] preorder, int[] inorder)
+        {
+            if (preorder == null || preorder.Length < 1)
+                return null;
 
+            Dictionary<int, int> dicOrder = new Dictionary<int, int>();
+            for (int i = 0; i < inorder.Length; i++)
+                dicOrder.Add(inorder[i], i);
+
+            return BuildTreePreInEx(preorder, 0, preorder.Length - 1
+                                  , inorder, 0, inorder.Length -1
+                                  , dicOrder);
+        }
+        public TreeNode BuildTreePreInEx(int[] preorder, int preStart, int preEnd
+                                       , int[] inorder, int inStart, int inEnd
+                                       , Dictionary<int,int> dicMap)
+        {
+            if (preStart > preEnd || inStart > inEnd)
+                return null;
+
+            TreeNode root = new TreeNode(preorder[preStart]);
+            int idx = dicMap[root.val];
+
+            //0,2
+            //0,2
+            //2
+
+            //1,2
+            //0,1
+            //1
+            root.left = BuildTreePreInEx(preorder, preStart + 1, preStart + 1 + (idx - inStart - 1)
+                                        , inorder, inStart, idx - 1
+                                        , dicMap);
+            root.right = BuildTreePreInEx(preorder, preStart + 1 + (idx - inStart - 1) + 1, preEnd
+                                        , inorder, idx +1, inEnd
+                                        , dicMap);
+
+            return root;
+        }
 
         #endregion
     }
