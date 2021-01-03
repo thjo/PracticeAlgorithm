@@ -3216,6 +3216,42 @@ namespace PracticeAlgorithm
             return root;
         }
 
+
+        [TestMethod]
+        public void Connect()
+        {
+
+        }
+        public Node Connect(Node root)
+        {
+            Node leftNode = root;
+
+            while(leftNode != null && leftNode.left != null)
+            {
+                popLowerLv(leftNode);
+                leftNode = leftNode.left;
+            }
+            return root;
+        }
+
+        private void popLowerLv(Node startNode)
+        {
+            Node iter = startNode;
+            while( iter != null)
+            {
+                iter.left.next = iter.right;
+                if (iter.next != null)
+                    iter.right.next = iter.next.left;
+                iter = iter.next;
+            }
+        }
+
+        public Node Connect2(Node root)
+        {
+            return root;
+        }
+
+
         #endregion
     }
 
@@ -3243,4 +3279,26 @@ namespace PracticeAlgorithm
         }
     }
 
+    public class Node
+    {
+        public int val;
+        public Node left;
+        public Node right;
+        public Node next;
+
+        public Node() { }
+
+        public Node(int _val)
+        {
+            val = _val;
+        }
+
+        public Node(int _val, Node _left, Node _right, Node _next)
+        {
+            val = _val;
+            left = _left;
+            right = _right;
+            next = _next;
+        }
+    }
 }
