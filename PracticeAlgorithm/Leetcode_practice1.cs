@@ -3248,8 +3248,57 @@ namespace PracticeAlgorithm
 
         public Node Connect2(Node root)
         {
+            #region | Comments | 
+
+            //Queue<Node> q = new Queue<Node>();
+            //q.Enqueue(root);
+
+            //while(q.Count > 0)
+            //{
+            //    int size = q.Count;
+            //    Node buff = new Node(0);
+
+            //    while (size-- > 0)
+            //    {
+            //        Node n = q.Dequeue();
+            //        if (n.left != null)
+            //            q.Enqueue(n.left);
+            //        if (n.right != null)
+            //            q.Enqueue(n.right);
+            //    }
+            //}
+
+            #endregion
+
+            if (root == null)
+                return null;
+
+            Node curr = root;
+            while(curr != null)
+            {
+                Node tmpStart = new Node(0);
+                Node buff = tmpStart;
+
+                while (curr != null)
+                {
+                    if (curr.left != null)
+                    {
+                        buff.next = curr.left;
+                        buff = buff.next;
+                    }
+                    if (curr.right != null)
+                    {
+                        buff.next = curr.right;
+                        buff = buff.next;
+                    }
+                    curr = curr.next;
+                }
+                curr = tmpStart.next;
+            }
+
             return root;
         }
+
 
 
         #endregion
