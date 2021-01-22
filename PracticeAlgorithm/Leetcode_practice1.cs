@@ -3299,8 +3299,68 @@ namespace PracticeAlgorithm
             return root;
         }
 
+        public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q)
+        {
+            if (root == null)
+                return null;
+
+            if (root.val == p.val || root.val == q.val)
+                return root;
+
+            TreeNode left = LowestCommonAncestor(root.left, p, q);
+            TreeNode right = LowestCommonAncestor(root.right, p, q);
+
+            if (left != null && right != null)
+                return root;
+            else if (left == null && right == null)
+                return null;
+
+            return left != null ? left : right;
+        }
 
 
+        // Encodes a tree to a single string.
+        public string Serialize(TreeNode root)
+        {
+            if (root == null)
+                return "X,";
+
+            string leftSerialize = Serialize(root.left);
+            string rightSerialize = Serialize(root.right);
+
+            return string.Format("{0},{1}{2}", root.val, leftSerialize, rightSerialize);
+        }
+
+        // Decodes your encoded data to tree.
+        public TreeNode Deserialize(string data)
+        {
+            if (string.IsNullOrWhiteSpace(data))
+                return null;
+
+            string[] tokens = data.Split(",".ToCharArray());
+            Queue<string> q = new Queue<string>();
+            foreach (string val in tokens)
+            {
+                if( string.IsNullOrWhiteSpace(val) == false)
+                    q.Enqueue(val);
+            }
+
+            return DeserializeHelper(q);
+        }
+        public TreeNode DeserializeHelper(Queue<string> q)
+        {
+            string val = string.Empty;
+            if (q != null)
+                val = q.Dequeue();
+            if (string.IsNullOrWhiteSpace(val) || val == "X" )
+                return null;
+
+            TreeNode newNode = new TreeNode(int.Parse(val));
+            newNode.left = DeserializeHelper(q);
+            newNode.right = DeserializeHelper(q);
+
+            return newNode;
+        }
         #endregion
     }
 
