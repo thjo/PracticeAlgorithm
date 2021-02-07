@@ -3053,17 +3053,12 @@ namespace PracticeAlgorithm
             return Math.Max(leftDepth, rightDepth) + 1;
         }
 
-        [TestMethod]
-        public void MaxDepth()
-        {
-
-        }
         public int MaxDepth(TreeNode root)
         {
-            //Top-Down
-            int answer = 0;
-            MaxDepthopDown(root, 1, ref answer);
-            return answer;
+            ////Top-Down
+            //int answer = 0;
+            //MaxDepthopDown(root, 1, ref answer);
+            //return answer;
 
             //Bottom-Up
             if (root == null)
@@ -3089,8 +3084,283 @@ namespace PracticeAlgorithm
         }
 
 
+        public bool IsSymmetric(TreeNode root)
+        {
+            if (root == null)
+                return true;
+
+            return IsMirror(root.left, root.right);
+        }
+        public bool IsMirror(TreeNode tree1, TreeNode tree2)
+        {
+            if (tree1 == null && tree2 == null)
+                return true;
+            else if (tree1 == null || tree2 == null)
+                return false;
+
+            if (tree1.val == tree2.val)
+            {
+                return IsMirror(tree1.left, tree2.right) && IsMirror(tree1.right, tree2.left);
+            }
+            else
+                return false;
+        }
 
 
+        public bool HasPathSum(TreeNode root, int sum)
+        {
+            if (root == null)
+                return false;
+
+            if (sum - root.val == 0 && root.left == null && root.right == null)
+                return true;
+
+            if (HasPathSum(root.left, (sum - root.val)))
+                return true;
+            else if (HasPathSum(root.right, (sum - root.val)))
+                return true;
+
+            return false;
+        }
+
+        [TestMethod]
+        public void BuildTree()
+        {
+            TreeNode val = null;
+            //BuildTreeInPost(new int[] { 9, 3, 15, 20, 7 }, new int[] { 9, 15, 7, 20, 3 });
+
+            //BuildTreePreIn(new int[] { 3, 9, 20, 15, 7 }, new int[] { 9, 3, 1, 20, 7 });
+            val = BuildTreePreIn(new int[] { 1, 2, 3 }, new int[] { 3, 2, 1 });
+
+        }
+        public TreeNode BuildTreeInPost(int[] inorder, int[] postorder)
+        {
+            if (postorder == null || postorder.Length < 1)
+                return null;
+
+            Dictionary<int, int> dicOrder = new Dictionary<int, int>();
+            for(int i = 0; i < inorder.Length; i++)
+                dicOrder.Add(inorder[i], i);
+
+            //TreeNode root = new TreeNode(postorder[postorder.Length - 1]);
+            //int index = Array.FindIndex(inorder, val => val.Equals(root.val));
+
+            //root.left = BuildTree(inorder.Take(index).ToArray(), postorder.Take(index).ToArray());
+            //root.right = BuildTree(inorder.Skip(index + 1).ToArray(), postorder.Skip(index).Take(postorder.Length - index - 1).ToArray());
+            //return root;
+            return BuildTreeInPostEx(inorder, 0, inorder.Length -1
+                             , postorder, 0, postorder.Length - 1
+                             , dicOrder);
+        }
+
+        public TreeNode BuildTreeInPostEx(int[] inorder, int inStart, int inEnd
+                                  , int[] postorder, int postStart, int postEnd
+                                  , Dictionary<int, int> dicOrder)
+        {
+            if (inStart > inEnd || postStart > postEnd )
+                return null;
+
+            TreeNode root = new TreeNode(postorder[postEnd]);
+
+
+            int idx = dicOrder[root.val];
+
+            root.left = BuildTreeInPostEx(inorder, inStart, idx - 1
+                                   , postorder, postStart, postStart + (idx - inStart - 1)
+                                   , dicOrder);
+            root.right = BuildTreeInPostEx(inorder, idx + 1, inEnd
+                                    , postorder, postStart + (idx - inStart - 1) + 1, postEnd - 1
+                                    , dicOrder);
+
+            return root;
+        }
+
+
+        public TreeNode BuildTreePreIn(int[] preorder, int[] inorder)
+        {
+            if (preorder == null || preorder.Length < 1)
+                return null;
+
+            Dictionary<int, int> dicOrder = new Dictionary<int, int>();
+            for (int i = 0; i < inorder.Length; i++)
+                dicOrder.Add(inorder[i], i);
+
+            return BuildTreePreInEx(preorder, 0, preorder.Length - 1
+                                  , inorder, 0, inorder.Length -1
+                                  , dicOrder);
+        }
+        public TreeNode BuildTreePreInEx(int[] preorder, int preStart, int preEnd
+                                       , int[] inorder, int inStart, int inEnd
+                                       , Dictionary<int,int> dicMap)
+        {
+            if (preStart > preEnd || inStart > inEnd)
+                return null;
+
+            TreeNode root = new TreeNode(preorder[preStart]);
+            int idx = dicMap[root.val];
+
+            //0,2
+            //0,2
+            //2
+
+            //1,2
+            //0,1
+            //1
+            root.left = BuildTreePreInEx(preorder, preStart + 1, preStart + 1 + (idx - inStart - 1)
+                                        , inorder, inStart, idx - 1
+                                        , dicMap);
+            root.right = BuildTreePreInEx(preorder, preStart + 1 + (idx - inStart - 1) + 1, preEnd
+                                        , inorder, idx +1, inEnd
+                                        , dicMap);
+
+            return root;
+        }
+
+
+        [TestMethod]
+        public void Connect()
+        {
+
+        }
+        public Node Connect(Node root)
+        {
+            Node leftNode = root;
+
+            while(leftNode != null && leftNode.left != null)
+            {
+                popLowerLv(leftNode);
+                leftNode = leftNode.left;
+            }
+            return root;
+        }
+
+        private void popLowerLv(Node startNode)
+        {
+            Node iter = startNode;
+            while( iter != null)
+            {
+                iter.left.next = iter.right;
+                if (iter.next != null)
+                    iter.right.next = iter.next.left;
+                iter = iter.next;
+            }
+        }
+
+        public Node Connect2(Node root)
+        {
+            #region | Comments | 
+
+            //Queue<Node> q = new Queue<Node>();
+            //q.Enqueue(root);
+
+            //while(q.Count > 0)
+            //{
+            //    int size = q.Count;
+            //    Node buff = new Node(0);
+
+            //    while (size-- > 0)
+            //    {
+            //        Node n = q.Dequeue();
+            //        if (n.left != null)
+            //            q.Enqueue(n.left);
+            //        if (n.right != null)
+            //            q.Enqueue(n.right);
+            //    }
+            //}
+
+            #endregion
+
+            if (root == null)
+                return null;
+
+            Node curr = root;
+            while(curr != null)
+            {
+                Node tmpStart = new Node(0);
+                Node buff = tmpStart;
+
+                while (curr != null)
+                {
+                    if (curr.left != null)
+                    {
+                        buff.next = curr.left;
+                        buff = buff.next;
+                    }
+                    if (curr.right != null)
+                    {
+                        buff.next = curr.right;
+                        buff = buff.next;
+                    }
+                    curr = curr.next;
+                }
+                curr = tmpStart.next;
+            }
+
+            return root;
+        }
+
+        public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q)
+        {
+            if (root == null)
+                return null;
+
+            if (root.val == p.val || root.val == q.val)
+                return root;
+
+            TreeNode left = LowestCommonAncestor(root.left, p, q);
+            TreeNode right = LowestCommonAncestor(root.right, p, q);
+
+            if (left != null && right != null)
+                return root;
+            else if (left == null && right == null)
+                return null;
+
+            return left != null ? left : right;
+        }
+
+
+        // Encodes a tree to a single string.
+        public string Serialize(TreeNode root)
+        {
+            if (root == null)
+                return "X,";
+
+            string leftSerialize = Serialize(root.left);
+            string rightSerialize = Serialize(root.right);
+
+            return string.Format("{0},{1}{2}", root.val, leftSerialize, rightSerialize);
+        }
+
+        // Decodes your encoded data to tree.
+        public TreeNode Deserialize(string data)
+        {
+            if (string.IsNullOrWhiteSpace(data))
+                return null;
+
+            string[] tokens = data.Split(",".ToCharArray());
+            Queue<string> q = new Queue<string>();
+            foreach (string val in tokens)
+            {
+                if( string.IsNullOrWhiteSpace(val) == false)
+                    q.Enqueue(val);
+            }
+
+            return DeserializeHelper(q);
+        }
+        public TreeNode DeserializeHelper(Queue<string> q)
+        {
+            string val = string.Empty;
+            if (q != null)
+                val = q.Dequeue();
+            if (string.IsNullOrWhiteSpace(val) || val == "X" )
+                return null;
+
+            TreeNode newNode = new TreeNode(int.Parse(val));
+            newNode.left = DeserializeHelper(q);
+            newNode.right = DeserializeHelper(q);
+
+            return newNode;
+        }
         #endregion
     }
 
@@ -3118,4 +3388,26 @@ namespace PracticeAlgorithm
         }
     }
 
+    public class Node
+    {
+        public int val;
+        public Node left;
+        public Node right;
+        public Node next;
+
+        public Node() { }
+
+        public Node(int _val)
+        {
+            val = _val;
+        }
+
+        public Node(int _val, Node _left, Node _right, Node _next)
+        {
+            val = _val;
+            left = _left;
+            right = _right;
+            next = _next;
+        }
+    }
 }
